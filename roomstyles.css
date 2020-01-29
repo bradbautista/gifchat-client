@@ -1,0 +1,90 @@
+* {
+    box-sizing: border-box;
+    list-style-type: none;
+    font-family: monospace;
+    font-weight: 100;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+    font-size: 62.5%;
+}
+
+  
+body { 
+    font: 13px Helvetica, Arial; 
+    display: flex;
+    flex-direction: column;
+}
+  
+form {
+    background: lightgrey; 
+    padding: 2rem;
+    position: fixed; 
+    bottom: 0; 
+    display: flex;
+    flex-direction: column;
+    width: 98.5%;
+}
+  
+form input { 
+    border: 0; 
+    padding: 10px;
+    flex-grow: 1;
+    margin-right: 2rem;
+}
+  
+form button { 
+    background: rgb(130, 224, 255); 
+    border: none; 
+    padding: 10px;
+}
+  
+#messages { 
+    list-style-type: none;
+    margin: 0; 
+    padding: 0; 
+}
+  
+#messages li { 
+    padding: 2rem; 
+}
+
+#messages img { 
+    border-radius: 1.5rem; 
+}
+  
+#messages li:nth-child(odd) { 
+    background: #eee; 
+}
+
+.hidden {
+    display: none;
+}
+
+.unhidden {
+    display: flex;
+}
+
+.input-flex-wrapper {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    flex-grow: 1;
+}
+
+#gif-options {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+    margin-top: 2rem;
+}
+
+#gif-options img {
+    margin: 1rem;
+    border-radius: 1.5rem;
+}
