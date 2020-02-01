@@ -1,23 +1,3 @@
-* {
-    box-sizing: border-box;
-    list-style-type: none;
-    font-family: monospace;
-    font-weight: 100;
-}
-
-html {
-    height: 100%;
-    width: 100%;
-    font-size: 62.5%;
-}
-
-  
-body { 
-    font: 13px Helvetica, Arial; 
-    display: flex;
-    flex-direction: column;
-}
-  
 form {
     background: lightgrey; 
     padding: 2rem;
@@ -70,7 +50,6 @@ form button {
 .input-flex-wrapper {
     display: flex;
     flex-direction: row;
-    /* justify-content: space-between; */
     flex-grow: 1;
 }
 

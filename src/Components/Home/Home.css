@@ -1,0 +1,201 @@
+body {
+    background-color: lightblue;
+  }
+   
+  header {
+    background-color: seashell;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid purple;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  
+  h1 {
+    font-size: 6.5rem;
+    margin: 0;
+  }
+  
+  main {
+    background-color: seashell;
+    opacity: 0.99;
+  }
+  
+  section {
+    display: flex;
+    flex-direction: column;
+    padding: 4rem;
+  }
+  
+  .room-button {
+    padding: 3rem;
+    padding-left: 3rem;
+    margin-bottom: 1.4rem;
+    background-color: honeydew;
+    border: 1px solid darkturquoise;
+    text-align: left;
+    font-size: 2.2rem;
+    letter-spacing: -0.5px;
+  }
+
+  .hidden {
+    display: none;
+    transition: 5s;
+  }
+
+  .input-flex-wrapper {
+    display: flex;
+  }
+
+  .destination-field {
+    padding: 2.5rem;
+    font-size: 2rem;
+    width: 60%;
+    margin-bottom: 1.4rem;
+  }
+
+  .go-button {
+    background: rgb(130, 224, 255); 
+    border: none;
+    width: 35%;
+    height: 7.7rem;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 3.8rem;
+    line-height: 3.2rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
+  
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  
+  li {
+    margin: 0;
+    margin-bottom: 1.5rem;
+    padding: 0;
+    padding-left: 0.5rem;
+    font-size: 2rem;
+  }
+  
+  footer {
+    background-color: gainsboro;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 1rem;
+    font-size: 2rem;
+  }
+
+/* CSS FOR TESTING OUT BOX POP/ CARD SWAP */
+
+.btn {
+  background-color: var(--background-color);
+  color: #222;
+  padding: .5em 1em;
+  border: none;
+  outline: none;
+  position: relative;
+  cursor: pointer;
+  
+  --background-color: blue;
+  --border-size: 2px;
+  --accent-color: #0AF;
+}
+
+.btn.btn-border-pop::before {
+  content: 'this is a test';
+  position: absolute;
+  background-color: purple;
+  top: -5px;
+  left: -5px;
+  right: 5px;
+  bottom: 5px;
+  z-index: -1;
+  transition: all 0.5s;
+}
+
+.btn.btn-border-pop:active::before {
+  z-index: 2;
+  top: 5px;
+  left: 5px;
+  right: -5px;
+  bottom: -5px;
+}
+
+  
+  /* TABLET BREAKPOINT */
+  
+  @media screen and (min-width: 720px) {
+    
+    body {
+      background-color: darkblue;
+    }
+  
+    section {
+        padding: 8rem;
+    }
+  
+    .room-button {
+        padding: 4rem;
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+  }
+  
+  /* DESKTOP BREAKPOINT */
+  
+  @media screen and (min-width: 1024px) {
+  
+    body {
+      background-color: seashell;
+    }
+  
+    header {
+        justify-content: flex-start;
+        padding-left: 8rem;
+        padding-bottom: 2rem;
+        padding-top: 2rem;
+    }
+  
+    section {
+        padding-top: 5rem;
+        width: 80rem;
+        padding-bottom: 4rem;
+        padding-left: 8rem;
+    }
+
+    h1 {
+      font-size: 12rem;
+      font-weight: 900;
+      color: cadetblue;
+      
+    }
+  
+    h2 {
+        margin-top: 3rem;
+        margin-bottom: 2rem;
+    }
+
+    .destination-field {
+      margin-bottom: 3rem;
+    }
+
+    .room-button {
+      margin-bottom: 3rem;
+    }
+  
+    footer {
+        justify-content: flex-start;
+    }
+  
+    footer a {
+        margin-left: 8rem;
+    }
+  
+  
+  }
