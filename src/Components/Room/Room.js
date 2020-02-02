@@ -166,7 +166,7 @@ export default class Room extends Component {
         {msgs}
         </ul>
         <form onSubmit={this.getGifs}>
-            <div className="input-flex-wrapper">
+            <div className="room-input-flex-wrapper">
                 <input type="text" value={this.state.value} onChange={this.handleChange} id="m" autoComplete="off" />
                 <button>Search</button>
             </div>

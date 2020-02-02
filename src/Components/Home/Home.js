@@ -11,9 +11,6 @@ export default class Home extends Component {
     super(props);
     this.state = {
       destination: '',
-      roomRequested: false,
-      showDestinationField: false,
-      swapped: false,
     };
 
   }
@@ -34,25 +31,9 @@ export default class Home extends Component {
   
   }
 
-
-  toggleRoomRequested = () => {
-    const currentState = this.state.roomRequested;
-    this.setState({ roomRequested: !currentState})
-  }
-
-  toggleShowDestinationField = () => {
-    const currentState = this.state.showDestinationField;
-    this.setState({ showDestinationField: !currentState})
-  }
-
-  toggleSwap = () => {
-    const currentState = this.state.swapped;
-    this.setState({ swapped: !currentState})
-  }
-
   render() {
 
-    const linkLocation = <Link to='/rooms/'>Some words</Link>
+    const linkLocation = 'a-quiet-blue-bird-named-bobby'
 
     return (
         <>
@@ -74,52 +55,55 @@ export default class Home extends Component {
                 
                 
                 */}
-                <button
-                  onClick={this.toggleRoomRequested}
-                  className={((this.state.roomRequested) ? 'hidden' : null) + ' ' + 'room-button'}
-                  >
-                  Get a room
-                </button>
-                <button
-                  onClick={this.toggleRoomRequested}
-                  className={((this.state.roomRequested) ? null : 'hidden') + ' ' + 'room-button'}
-                  >
-                  Room created at <Link style={{ fontWeight : 900 }} to="/rooms/">a-maleficent-chartreuse-hippopotamus-named-maximillian.</Link> Link copied to clipboard!
-                </button>
+
+              {/* GET ROOM */}
 
               <NavButton 
-                frontCardText="Get a room" 
-                backCardText={`Room created at ${linkLocation}! Link copied to clipboard!`}
+                frontCardContent="Get a room" 
+                backCardContent={
+
+                  // Feels hacky, but: Combining strings ('Room created at...', etc.) and Link object caused a lot of [Object object], so instead we need to do it in HTML. Because we need to do it in HTML, we need to return only one element instead of three (span, link, span).
+
+                  <>
+                    <span>Room created at </span>
+                      <Link 
+                        to={`/rooms/${linkLocation}`}
+                        className='room-link'
+                      >
+                        {linkLocation}.
+                        
+                      </Link>
+                    <span> Link copied to clipboard!</span>
+                  </>
+
+                }
               />
-              
+
+              {/* GO TO ROOM */}
+
               <NavButton 
-                frontCardText={<Link to="/randos">Text</Link>}
-                backCardText={'Room created at ' + <Link to="/randos">Text</Link>}
+                frontCardContent='Go to room'
+                backCardContent={
+                  <div className='home-input-flex-wrapper'>
+                    <input 
+                      className='destination-field' 
+                      value={this.state.destination} 
+                      onChange={this.handleChange} 
+                      type="text" placeholder="Enter URL"/>
+                    <button className='go-button'>Go</button>
+                  </div>
+                }
 
               />
 
-                {/* GO TO ROOM */}
-
-                <button
-                  onClick={this.toggleShowDestinationField}
-                  className='room-button'
-                  >
-                  <Link to="/rooms/">Go to room</Link>
-                </button>
-                <div className='input-flex-wrapper'>
-                  <input 
-                    className={((this.state.showDestinationField) ? '' : 'hidden') + ' ' + 'destination-field'} 
-                    value={this.state.destination} 
-                    onChange={this.handleChange} 
-                    type="text" placeholder="Enter URL"/>
-                  <button className={((this.state.showDestinationField) ? '' : 'hidden') + ' ' + 'go-button'}>Go</button>
-                </div>
-                
-                <br />
-                
-                <button className='room-button' onClick={() => this.props.history.push('/randos/')}>Get a rando</button>
-
-            
+              {/* GET A RANDO */}
+              <Link to="/randos/">
+                <NavButton 
+                  frontCardContent='Get a rando'
+                  backCardContent=''
+                />
+              </Link>
+        
 
                 {/* Let's look for candidates for components here? */}
                 <h2>Here's how this works</h2>
@@ -130,9 +114,7 @@ export default class Home extends Component {
                     <li><strong>GIFs only.</strong></li>
                     <li><strong>Conversations last while they're active.</strong> Your room URL is your link to that conversation. If conversations go inactive for seven days, they disappear and the room is closed.</li>
                 </ul>
-
-                <button className="btn btn-border-pop">Border Pop</button> 
-            
+           
             </section>
 
 

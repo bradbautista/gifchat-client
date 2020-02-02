@@ -1,7 +1,7 @@
 .card-container {
-    height: 10rem;
+    height: 21rem;
     background-color: pink;
-    margin-bottom: 3rem;
+    margin-bottom: 5rem;
     position: relative;
 }
 
@@ -10,7 +10,7 @@
     flex-direction: column;
     justify-content: center;
     position: absolute;
-    padding: 2rem;
+    padding: 3rem;
     width: 100%;
     outline: 1px solid black;
 }
@@ -43,4 +43,22 @@
     left: 10px;
     right: -10px;
     bottom: -10px;
+}
+
+/* TABLET BREAKPOINT */
+  
+@media screen and (min-width: 720px) {
+
+    
+}
+
+/* DESKTOP BREAKPOINT */
+  
+@media screen and (min-width: 1024px) {
+
+    .card-container {
+        height: 17rem;
+        margin-bottom: 5rem;
+    }
+    
 }

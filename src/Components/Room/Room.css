@@ -47,7 +47,7 @@ form button {
     display: flex;
 }
 
-.input-flex-wrapper {
+.room-input-flex-wrapper {
     display: flex;
     flex-direction: row;
     flex-grow: 1;
