@@ -23,14 +23,14 @@ export default class NavButton extends Component {
 
         <div className="card-container">
             <div 
-            onClick={this.toggleSwap} 
+            onClick={(this.props.frontCardContent == 'Get a rando') ? this.props.onClick : this.toggleSwap} 
             className="card front"
             >
                 {this.props.frontCardContent}
             </div>
 
             <div 
-            onClick={this.toggleSwap} 
+            // onClick={this.toggleSwap} 
             className={'card' + ' ' + 'back' + ' ' + ((this.state.swapped) ? 'swap' : null)}>
                 {this.props.backCardContent}
             </div>

@@ -11,6 +11,7 @@ export default class Home extends Component {
     super(props);
     this.state = {
       destination: '',
+      lonelyRandos: false,
     };
 
   }
@@ -90,30 +91,31 @@ export default class Home extends Component {
                       value={this.state.destination} 
                       onChange={this.handleChange} 
                       type="text" placeholder="Enter URL"/>
-                    <button className='go-button'>Go</button>
+                    <button className='go-button'
+                      onClick={() => {console.log('Yo')}}
+                    >Go</button>
                   </div>
                 }
 
               />
 
               {/* GET A RANDO */}
-              <Link to="/randos/">
                 <NavButton 
+                  onClick={() => {this.props.history.push('/randos/')}}
                   frontCardContent='Get a rando'
-                  backCardContent=''
+                  backCardContent={console.log(this)}
                 />
-              </Link>
         
 
-                {/* Let's look for candidates for components here? */}
-                <h2>Here's how this works</h2>
-                <ul>
-                    <li><strong>No logins.</strong> GifChat does not want your email address.</li>
-                    <li><strong>No names.</strong> GifChat does not care who you are.</li>
-                    <li><strong>Two to a room.</strong></li>
-                    <li><strong>GIFs only.</strong></li>
-                    <li><strong>Conversations last while they're active.</strong> Your room URL is your link to that conversation. If conversations go inactive for seven days, they disappear and the room is closed.</li>
-                </ul>
+              {/* HOW TO // Should this be a component? */}
+              <h2>Here's how this works</h2>
+              <ul>
+                  <li><strong>No logins.</strong> GifChat does not want your email address.</li>
+                  <li><strong>No names.</strong> GifChat does not care who you are.</li>
+                  <li><strong>Two to a room.</strong></li>
+                  <li><strong>GIFs only.</strong></li>
+                  <li><strong>Conversations last while they're active.</strong> Your room URL is your link to that conversation. If conversations go inactive for seven days, they disappear and the room is closed.</li>
+              </ul>
            
             </section>
 

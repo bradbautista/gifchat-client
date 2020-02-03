@@ -11,8 +11,23 @@ export default class Room extends Component {
     super(props);
     this.state = {
       value: '',
-      messages: ["http://media.tenor.com/images/0f097ed319d498c2bda3d87ba4f6ff10/tenor.gif", "http://media.tenor.com/images/0f097ed319d498c2bda3d87ba4f6ff10/tenor.gif"],
-      gifOptions: ["http://media.tenor.com/images/6b69e96d18e0cfb8248d7a138411d0ce/tenor.gif", "http://media.tenor.com/images/6b69e96d18e0cfb8248d7a138411d0ce/tenor.gif"],
+      messages: ["http://media.tenor.com/images/0f097ed319d498c2bda3d87ba4f6ff10/tenor.gif", "http://media.tenor.com/images/0f097ed319d498c2bda3d87ba4f6ff10/tenor.gif", "http://media.tenor.com/images/0f097ed319d498c2bda3d87ba4f6ff10/tenor.gif", "http://media.tenor.com/images/0f097ed319d498c2bda3d87ba4f6ff10/tenor.gif", "http://media.tenor.com/images/0f097ed319d498c2bda3d87ba4f6ff10/tenor.gif", "http://media.tenor.com/images/0f097ed319d498c2bda3d87ba4f6ff10/tenor.gif"],
+      gifOptions: [
+
+        "https://picsum.photos/220/180",
+        "https://picsum.photos/220/180",
+        "https://picsum.photos/220/180",
+        "https://picsum.photos/220/180",
+        "https://picsum.photos/220/180",
+        "https://picsum.photos/220/180",
+        "https://picsum.photos/220/180",
+
+
+
+
+
+        // "http://media.tenor.com/images/6b69e96d18e0cfb8248d7a138411d0ce/tenor.gif", "http://media.tenor.com/images/6b69e96d18e0cfb8248d7a138411d0ce/tenor.gif", "http://media.tenor.com/images/6b69e96d18e0cfb8248d7a138411d0ce/tenor.gif", "http://media.tenor.com/images/6b69e96d18e0cfb8248d7a138411d0ce/tenor.gif", "http://media.tenor.com/images/6b69e96d18e0cfb8248d7a138411d0ce/tenor.gif", 
+      ], 
     };
 
   }
@@ -108,6 +123,20 @@ export default class Room extends Component {
   
   }
 
+  emptyOptions = (e) => {
+    
+    let n = Math.floor(Math.random() * Math.floor(7));
+
+    const prngArray = this.state.gifOptions.splice(0, n);
+
+    console.log(prngArray)
+
+    e.preventDefault()
+    this.setState({gifOptions: [...prngArray]});
+    // console.log('Heya')
+  
+  }
+
   // When the server emits a msg to the client,
   // update this.state.messages to include the msg
   handleMessage = (msg) => {
@@ -123,9 +152,9 @@ export default class Room extends Component {
   // When the page loads, 
   componentDidMount() {
 
-    console.log(this)
+    // console.log(this)
 
-    console.log(this.state.messages)
+    // console.log(this.state.messages)
 
     // Establish which socket to communicate with;
     // this will ultimately be the room URL, but for
@@ -154,7 +183,7 @@ export default class Room extends Component {
         // Select small preview gif and arrange them in a flex container that wraps
         return (
             <li key={uuidv4()}>
-                <img src={option}></img>
+                <img className="chat-message" src={option} />
             </li>
         )
     })
@@ -162,17 +191,27 @@ export default class Room extends Component {
   return (
     <div className="Room">
     <main>
-        <ul id="messages">
+
+        <ul className="messages">
         {msgs}
         </ul>
-        <form onSubmit={this.getGifs}>
-            <div className="room-input-flex-wrapper">
-                <input type="text" value={this.state.value} onChange={this.handleChange} id="m" autoComplete="off" />
-                <button>Search</button>
-            </div>
-        <ul id="gif-options">
-        {gifOptions}
-        </ul>
+
+        {/* <form onSubmit={this.getGifs}> */}
+        <form onSubmit={this.emptyOptions}>
+
+          <div className="room-input-flex-wrapper">
+            <input type="text" value={this.state.value} onChange={this.handleChange} id="m" autoComplete="off" />
+            <button>Search</button>
+          </div>
+
+          <img className="tenor-attr" src="https://www.gstatic.com/tenor/web/attribution/PB_tenor_logo_blue_horizontal.png" />
+
+          {/* React wants to re-render the form component every time the array (and thus height) changes, which kills our CSS transition. To get around this, we generate a dynamic height value based on the length of the array. */}
+
+          <ul className="gif-options" style={{ height: this.state.gifOptions.length * 15 + 'rem'}}>
+          {gifOptions}
+          </ul>
+
         </form>
     </main>
 
