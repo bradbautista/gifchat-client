@@ -11,108 +11,96 @@ export default class Room extends Component {
     super(props);
     this.state = {
       value: '',
-      messages: ["http://media.tenor.com/images/0f097ed319d498c2bda3d87ba4f6ff10/tenor.gif", "http://media.tenor.com/images/0f097ed319d498c2bda3d87ba4f6ff10/tenor.gif", "http://media.tenor.com/images/0f097ed319d498c2bda3d87ba4f6ff10/tenor.gif", "http://media.tenor.com/images/0f097ed319d498c2bda3d87ba4f6ff10/tenor.gif", "http://media.tenor.com/images/0f097ed319d498c2bda3d87ba4f6ff10/tenor.gif", "http://media.tenor.com/images/0f097ed319d498c2bda3d87ba4f6ff10/tenor.gif"],
-      gifOptions: [
-
-        "https://picsum.photos/220/180",
-        "https://picsum.photos/220/180",
-        "https://picsum.photos/220/180",
-        "https://picsum.photos/220/180",
-        "https://picsum.photos/220/180",
-        "https://picsum.photos/220/180",
-        "https://picsum.photos/220/180",
-
-
-
-
-
-        // "http://media.tenor.com/images/6b69e96d18e0cfb8248d7a138411d0ce/tenor.gif", "http://media.tenor.com/images/6b69e96d18e0cfb8248d7a138411d0ce/tenor.gif", "http://media.tenor.com/images/6b69e96d18e0cfb8248d7a138411d0ce/tenor.gif", "http://media.tenor.com/images/6b69e96d18e0cfb8248d7a138411d0ce/tenor.gif", "http://media.tenor.com/images/6b69e96d18e0cfb8248d7a138411d0ce/tenor.gif", 
-      ], 
+      messages: [],
+      gifs: {
+        previews: [],
+        fullsize: [],
+      }
     };
 
   }
 
   
-  // This function name should and will change to handleSelect,
-  // since it will run when the user selects a gif by clicking on it
-
-  sendMessage = (e) => {
-    
-    e.preventDefault()
+  sendMessage = (msg) => {
   
-    console.log('We chattin')
     console.log(this.state.messages)
+    console.log(msg)
+
+    // HI BRAD THIS IS BRAD THE CODE BELOW IS JUST FOR THE DUMMY CLIENT, THE CODE BELOW THAT IS GOOD AND YOU SHOULD UNCOMMENT IT AT THE PROPER TIME BUT FOR NOW WE'RE JUST PUSHING THE IMAGE INTO THE MESSAGES ARRAY
+
+    this.setState({ gifs: {previews: [], fullsize: []} })
+    this.setState({ value: '' })
+    this.setState({messages: [...this.state.messages, msg]})
 
     // Designate the server socket to emit to; this will have
     // to be the room name, i.e. url (path?); when we get there, we'll 
     // need to install and require unique names, but for now it's just
     // going to connect to the proof-of-concept server
-    const socket = io('http://localhost:3000/');
+    // const socket = io('http://localhost:3000/');
 
     // Emit a chat message to the server; rather than
     // this.state.value, the value after the function
     // name changes will be the GIF url. Don't know
     // whether we'll need a setState statement after
-    socket.emit('chat message', this.state.value);
-          this.setState({value: ''})
+    // socket.emit('chat message', this.state.value);
+    //       this.setState({value: ''})
   
   }
 
-  // Query the Tenor API for GIFs related to the search term,
-  // then set those GIFs in state
+  // Query the Tenor API for GIFs related to the search term, then set those GIFs in state as GIF options
 
   getGifs = (e) => {
     
     e.preventDefault()
 
     // Clear the previous options
-    this.setState({gifOptions: []})
-
-    console.log(this.state.gifOptions)
-  
-    console.log('We fetchin')
+    this.setState({previews: []})
 
     const endpoint = config.API_ENDPOINT
     const query = this.state.value
     const apiKey = config.API_KEY
-    console.log(config.API_KEY)
+    const limit = 8 // The number of gifs to fetch
 
-    const url = `${endpoint}search?q=${query}&key=${apiKey}&limit=5`
+    const url = `${endpoint}search?q=${query}&key=${apiKey}&limit=${limit}`
     const options = {
       method: 'GET',
       redirect: 'follow',
     }
 
-    console.log(url)
-    console.log(endpoint)
-    console.log(query)
+    // console.log(url)
+    // console.log(endpoint)
+    // console.log(query)
+    // console.log(this.state)
 
     return fetch(url, options)
         .then((res) => {
           return res.json();
         })
-        .then((ourJson) => {
-          console.log(ourJson)
-          // this.setState({gifOptions: [...this.state.gifOptions, ]})
+        .then((responseJson) => {
+
+          // Trim the results
+          const searchResults = responseJson.results
+
+          // Extract previews from the results
+          const gifPreviews = searchResults.map((result) => {
+            return result.media[0].tinygif.url
+          })
+
+          // Extract the full-size gifs from the results so we can send the full-size gif to chat
+          const fullSizeGifs = searchResults.map((result) => {
+            return result.media[0].gif.url
+          })
+          
+          // Set the gifs
+          this.setState({
+            gifs: {
+              previews: [...gifPreviews], 
+              fullsize: [...fullSizeGifs]
+            }
+          })
+          
         })
-        .catch(error => {    console.error(error)  })
-    
-
-    // // Emit a chat message
-    // socket.emit('chat message', this.state.value);
-    //       this.setState({value: ''})
-  
-  }
-
-  renderGifs() {
-    
-    // const { articleList = [] } = this.context
-    // return articleList.map(article =>
-    //   <ArticleListItem
-    //     key={article.id}
-    //     article={article}
-    //   />
-    // )
+        .catch(error => { console.error(error) })
   
   }
 
@@ -127,12 +115,12 @@ export default class Room extends Component {
     
     let n = Math.floor(Math.random() * Math.floor(7));
 
-    const prngArray = this.state.gifOptions.splice(0, n);
+    const prngArray = this.state.gifs.previews.splice(0, n);
 
     console.log(prngArray)
 
     e.preventDefault()
-    this.setState({gifOptions: [...prngArray]});
+    this.setState({gifs: {previews: [...prngArray]}});
     // console.log('Heya')
   
   }
@@ -159,10 +147,10 @@ export default class Room extends Component {
     // Establish which socket to communicate with;
     // this will ultimately be the room URL, but for
     // now it's just the dummy server
-    const socket = io('http://localhost:3000');
+    // const socket = io('http://localhost:3000');
 
     // When the 
-    socket.on('chat message', this.handleMessage)
+    // socket.on('chat message', this.handleMessage)
 
   }
   
@@ -179,11 +167,16 @@ export default class Room extends Component {
         )
     })
 
-    const gifOptions = this.state.gifOptions.map((option) => {
+    const gifOptions = this.state.gifs.previews.map((preview, i) => {
+
+        // We don't want to send the preview to the server, we want to send the full-size gif
+
+        const fullSizeGif = this.state.gifs.fullsize[i]
+
         // Select small preview gif and arrange them in a flex container that wraps
         return (
-            <li key={uuidv4()}>
-                <img className="chat-message" src={option} />
+            <li key={i}>
+                <img onClick={() => this.sendMessage(fullSizeGif)} className="chat-message" src={preview} />
             </li>
         )
     })
@@ -196,11 +189,17 @@ export default class Room extends Component {
         {msgs}
         </ul>
 
-        {/* <form onSubmit={this.getGifs}> */}
-        <form onSubmit={this.emptyOptions}>
+        <form onSubmit={this.getGifs}>
+        {/* <form onSubmit={this.emptyOptions}> */}
 
           <div className="room-input-flex-wrapper">
-            <input type="text" value={this.state.value} onChange={this.handleChange} id="m" autoComplete="off" />
+            <input type="text" 
+              value={this.state.value} 
+              onChange={this.handleChange} 
+              id="m" 
+              autoComplete="off" 
+              placeholder="Enter search term"
+            />
             <button>Search</button>
           </div>
 
@@ -208,7 +207,9 @@ export default class Room extends Component {
 
           {/* React wants to re-render the form component every time the array (and thus height) changes, which kills our CSS transition. To get around this, we generate a dynamic height value based on the length of the array. */}
 
-          <ul className="gif-options" style={{ height: this.state.gifOptions.length * 15 + 'rem'}}>
+          <ul className="gif-options" 
+          style={{ height: this.state.gifs.previews.length * 15 + 'rem'}}
+          >
           {gifOptions}
           </ul>
 
