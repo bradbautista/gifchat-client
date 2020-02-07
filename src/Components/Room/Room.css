@@ -9,6 +9,7 @@ form {
     bottom: 0; 
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     width: 100%;
     border-top: 1px solid darkturquoise;
     /* transition: all 4s ease; */
@@ -46,21 +47,6 @@ form button {
     border-bottom: 1px solid gainsboro;
 }
 
-.chat-message { 
-    /* border-radius: 1.5rem;  */
-}
-
-/* .chat-message::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border: 2px solid gray;
-    left: 30px;
-    top: -30px;
-    z-index: -1;
-} */
-
 
   
 /* .messages li:nth-child(odd) { 
@@ -94,10 +80,12 @@ form button {
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: flex-start;
+    align-content: flex-start;
     padding: 0;
     margin: 0;
     margin-top: 3rem;
     transition: all 1s ease;
+    flex-grow: 1;
 }
 
 .gif-options img {
@@ -105,6 +93,7 @@ form button {
     border-radius: 1.5rem;
     padding: 0;
     margin-left: 0;
+    width: 90%;
 }
 
 .tenor-attr {
@@ -125,14 +114,52 @@ form button {
 @media screen and (min-width: 1024px) {
 
     form {
-        width: 50%;
-        left: 50%;
+        position: sticky;
+        top: 0;
+        width: 50rem;
+        bottom: auto;
+        height: 100%;
+        /* left: 50%; */
         /* transform: translateX(-50%); */
+        transition: all 0s ease 0s
+    }
+
+    form input {
+        /* flex-grow: 0; */
+    }
+
+    .room-input-flex-wrapper {
+        flex-grow: 0;
+    }
+
+    .room {
+        display: flex;
+        overflow: hidden;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+        position: relative;
+        height: 100vh;
+        /* margin-top: -100px;
+        padding-top: 100px; */
+        width: 100%;
+    }
+    
+
+    .gif-options {
+        max-height: 100%;
+        overflow: auto;
+        flex-grow: 0;
+    }
+
+    .gif-options li {
+        width: 100%;
     }
 
     .messages {
         width: 50%;
-        margin-right: auto;
+        overflow: auto;
+        flex-direction: column;
+        /* margin-right: auto; */
         border-right: 1px solid rebeccapurple;
     }
 
@@ -144,10 +171,5 @@ form button {
     .messages img { 
         width: 90%;
     }
-
-    /* .gif-options {
-        max-height: 100%;
-    } */
-    
     
 }

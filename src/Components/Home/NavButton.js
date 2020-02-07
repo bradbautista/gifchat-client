@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import './NavButton.css'
 
 export default class NavButton extends Component {
@@ -23,7 +22,8 @@ export default class NavButton extends Component {
 
         <div className="card-container">
             <div 
-            onClick={(this.props.frontCardContent == 'Get a rando') ? this.props.onClick : this.toggleSwap} 
+            onClick={() => {this.props.onClick(); this.toggleSwap()}}
+            // onClick={(this.props.frontCardContent == 'Get a rando') ? this.props.onClick : this.toggleSwap} 
             className="card front"
             >
                 {this.props.frontCardContent}

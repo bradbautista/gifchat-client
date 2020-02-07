@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import './Home.css'
+import config from '../../config'
 import NavButton from './NavButton'
 
 export default class Home extends Component {
@@ -11,6 +12,7 @@ export default class Home extends Component {
     super(props);
     this.state = {
       destination: '',
+      createdRoom: '',
       lonelyRandos: false,
     };
 
@@ -18,11 +20,44 @@ export default class Home extends Component {
 
   getRoom = () => {
 
+    console.log('getRoom fired')
+
     // >> user clicks "Get a room"
 
     // Send a POST request to the server (/ or /rooms/ or /requestRoom)
     // server should create a room at a URL and respond with that URL
     // 
+    
+    const endpoint = config.GIFCHAT_API_ENDPOINT
+    const url = `${endpoint}/rooms`
+    const options = {
+      method: 'POST',
+      body: '',
+      headers: {
+        'content-type': 'application/json',
+      }
+    }
+
+    // console.log(url)
+    // console.log(endpoint)
+    // console.log(query)
+    // console.log(this.state)
+
+    return fetch(url, options)
+        .then((res) => {
+          return res.json();
+        })
+        .then((responseJson) => {
+
+          console.log(responseJson)
+          console.log(responseJson[0])
+
+          this.setState({
+            createdRoom: responseJson[0]
+          })
+          
+        })
+        .catch(error => { console.error(error) })
 
   }
 
@@ -33,8 +68,6 @@ export default class Home extends Component {
   }
 
   render() {
-
-    const linkLocation = 'a-quiet-blue-bird-named-bobby'
 
     return (
         <>
@@ -59,7 +92,8 @@ export default class Home extends Component {
 
               {/* GET ROOM */}
 
-              <NavButton 
+              <NavButton
+                onClick={this.getRoom}
                 frontCardContent="Get a room" 
                 backCardContent={
 
@@ -68,10 +102,10 @@ export default class Home extends Component {
                   <>
                     <span>Room created at </span>
                       <Link 
-                        to={`/rooms/${linkLocation}`}
+                        to={`/rooms/${this.state.createdRoom}`}
                         className='room-link'
                       >
-                        {linkLocation}.
+                        {this.state.createdRoom}.
                         
                       </Link>
                     <span> Link copied to clipboard!</span>
@@ -103,7 +137,7 @@ export default class Home extends Component {
                 <NavButton 
                   onClick={() => {this.props.history.push('/randos/')}}
                   frontCardContent='Get a rando'
-                  backCardContent={console.log(this)}
+                  backCardContent=''
                 />
         
 
