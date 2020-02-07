@@ -29,7 +29,7 @@ export default class Home extends Component {
     // 
     
     const endpoint = config.GIFCHAT_API_ENDPOINT
-    const url = `${endpoint}/rooms`
+    const url = `${endpoint}rooms/`
     const options = {
       method: 'POST',
       body: '',

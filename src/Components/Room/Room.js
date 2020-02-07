@@ -27,32 +27,24 @@ export default class Room extends Component {
 
     this.setState({ gifs: {previews: [], fullsize: []} })
     // this.setState({ value: '' })
-    this.setState({messages: [...this.state.messages, msg]})
 
     // We're using regex to get the room name; this will pull everything after the last slash in the url; .exec returns an array, but the first item in it is what we want
-    const roomRegEx = /([^/]+$)/
-    const roomName = roomRegEx.exec(this.props.location.pathname)[0]
+    // const roomRegEx = /([^/]+$)/
+    // const roomName = roomRegEx.exec(this.props.location.pathname)[0]
 
     // We're also using regex to get the subdirectory, either /rooms/ or /randos/. We want to use RegEx rather than slice or something to account for differences in name length
-    const subdirRegEx = /^(.*[\\\/])/
-    const subdir = subdirRegEx.exec(this.props.location.pathname)[0]
+    // const subdirRegEx = /^(.*[\\\/])/
+    // const subdir = subdirRegEx.exec(this.props.location.pathname)[0]
 
-    const endpoint = config.GIFCHAT_API_ENDPOINT
-    const url = `${endpoint}${subdir}${roomName}`
-    console.log(url)
+    // const endpoint = config.GIFCHAT_API_ENDPOINT
+    // const url = `${endpoint}${subdir}${roomName}`
+    // console.log(url)
     
-    // Establish which socket to communicate with;
-    // this will ultimately be the room URL, but for
-    // now it's just the dummy server
+    // Establish which socket to communicate with
     const socket = this.state.room
 
-    socket.connect();
-
     // Emit a chat message to the server
-    socket.emit('chat message', (msg) => {
-      console.log(msg)
-      this.checkConnection();
-    });
+    socket.emit('chat message', msg);
     // console.log(socket.emit('chat message', msg));
     this.setState({value: ''})
   
@@ -72,18 +64,13 @@ export default class Room extends Component {
     const apiKey = config.API_KEY
     const limit = 10 // The number of gifs to fetch
 
-    // Media_filter gets rid of unnecessary results in the response, ar_range controls aspect ratio 
+    // Media_filter gets rid of unnecessary results in the response, ar_range controls aspect ratio (normal or wide, we're going with default)
 
     const url = `${endpoint}search?q=${query}&key=${apiKey}&limit=${limit}&media_filter=minimal`
     const options = {
       method: 'GET',
       redirect: 'follow',
     }
-
-    // console.log(url)
-    // console.log(endpoint)
-    // console.log(query)
-    // console.log(this.state)
 
     return fetch(url, options)
         .then((res) => {
@@ -129,6 +116,10 @@ export default class Room extends Component {
   handleMessage = (msg) => {
 
     console.log(msg)
+
+    // const socket = this.state.room;
+
+    this.setState({messages: [...this.state.messages, msg]})
     
     // this.setState({messages: [...this.state.messages, msg]})
 
@@ -147,31 +138,30 @@ export default class Room extends Component {
   componentDidMount() {
 
     // We're using regex to get the room name; this will pull everything after the last slash in the url; .exec returns an array, but the first item in it is what we want
-    const roomRegEx = /([^/]+$)/
-    const roomName = roomRegEx.exec(this.props.location.pathname)[0]
+    // const roomRegEx = /([^/]+$)/
+    // const roomName = roomRegEx.exec(this.props.location.pathname)[0]
 
     // We're also using regex to get the subdirectory, either /rooms/ or /randos/. We want to use RegEx rather than slice or something to account for differences in name length
-    const subdirRegEx = /^(.*[\\\/])/
-    const subdir = subdirRegEx.exec(this.props.location.pathname)[0]
+    // const subdirRegEx = /^(.*[\\\/])/
+    // const subdir = subdirRegEx.exec(this.props.location.pathname)[0]
 
     const api_endpoint = config.GIFCHAT_API_ENDPOINT
-    const url = `${api_endpoint}${subdir}${roomName}`
-    console.log(url)
+    // const url = `${api_endpoint}${subdir}${roomName}`
+    // console.log(url)
     // console.log(this)
     
     // Connect to the socket and tell it which room to put the user in
-    const socket = io.connect(url, {reconnect: true});
+    const socket = io.connect(api_endpoint);
     this.setState({ room: socket })
 
-    console.log(socket)
+    // console.log(socket)
 
-    socket.on('connect', function(socket) {
-      // Connected, let's sign up for to receive messages for this room
-      socket.emit('room', roomName);
-      console.log(socket.connected);
-      socket.emit('refresh');
-      console.log(socket.connected);
-    })
+    // socket.on('connection', function(socket) {
+    //   // Connected, let's sign up for to receive messages for this room
+    //   // socket.emit('room', roomName);
+    //   console.log(socket.connected);
+    //   console.log(socket.connected);
+    // })
 
     socket.on('chat message', this.handleMessage);
 
