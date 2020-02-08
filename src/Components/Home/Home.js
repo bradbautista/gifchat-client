@@ -61,6 +61,9 @@ export default class Home extends Component {
 
   }
 
+  satisfyReact = () => {
+  }
+
   handleChange = (e) => {
     
     this.setState({destination: e.target.value});
@@ -116,7 +119,10 @@ export default class Home extends Component {
 
               {/* GO TO ROOM */}
 
-              <NavButton 
+              <NavButton
+
+                // This is dumb but it works. So, NavButton is passing this.props.onClick and this.toggleSwap onClick, so React gets mad if there's not an onClick function assigned. But because of the fact that we're passing two functions and that requires a semicolon to work, JSX gets mad if we try to conditionally pass the onClick props based on this.props.frontCardContent. Thus, we pass this onClick an empty function and the program is happy.
+                onClick={() => this.satisfyReact}
                 frontCardContent='Go to room'
                 backCardContent={
                   <div className='home-input-flex-wrapper'>

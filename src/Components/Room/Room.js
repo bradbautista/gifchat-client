@@ -20,35 +20,132 @@ export default class Room extends Component {
 
   }
 
+  getMessages = () => {
+
+    // We're using regex to get the room name; this will pull everything after the last slash in the url; .exec returns an array, but the first item in it is what we want
+    const roomRegEx = /([^/]+$)/
+    const roomName = roomRegEx.exec(this.props.location.pathname)[0]
+
+    // We're using regex to get the directory, either /rooms/ or /randos/. We want to use RegEx rather than slice or something to account for differences in name length. However, we do need to slice the subdir here to get rid of an extra slash we need elsewhere.
+    const subdirRegEx = /^(.*[\\\/])/
+    const subdir = subdirRegEx.exec(this.props.location.pathname)[0].slice(1)
+    const endpoint = config.GIFCHAT_API_ENDPOINT
+    const url = `${endpoint}${subdir}${roomName}`
+
+    const options = {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+      }
+    }
+
+    return fetch(url, options)
+      .then(messages => {
+        if (!messages.ok) {
+            // get the error message from the response,
+            return messages.json().then(error => {
+            // then throw it
+            throw error
+            })
+        }
+        return messages.json()
+      })
+      .then(messages => {
+        // Trim the chaff from the response and set them in state
+        const messageArray = messages[0].messages
+        this.setState({ messages: [...messageArray]})
+      })
+      .catch(error => { console.error(error) })
+
+  }
+
+  reportConnection = () => {
+
+    // Well send this as a date, and then do Date.parse on the server side
+    console.log(new Date())
+
+    const roomRegEx = /([^/]+$)/
+    const roomName = roomRegEx.exec(this.props.location.pathname)[0]
+    const subdirRegEx = /^(.*[\\\/])/
+    const subdir = subdirRegEx.exec(this.props.location.pathname)[0].slice(1)
+    const endpoint = config.GIFCHAT_API_ENDPOINT
+    const url = `${endpoint}${subdir}${roomName}`
+
+    const currentDate = { date: new Date().toString() }
+
+    const options = {
+      method: 'PUT',
+      body: JSON.stringify(currentDate),
+      headers: {
+        'content-type': 'application/json',
+      }
+    }
+
+    return fetch(url, options)
+      .then(res => {
+        if (!res.ok) {
+            // get the error message from the response,
+            return res.json().then(error => {
+            // then throw it
+            throw error
+            })
+        }
+        return res.json()
+      })
+      .catch(error => { console.error(error) })
+
+  }
   
   sendMessage = (msg) => {
 
-    // HI BRAD THIS IS BRAD THE CODE BELOW IS JUST FOR THE DUMMY CLIENT, THE CODE BELOW THAT IS GOOD AND YOU SHOULD UNCOMMENT IT AT THE PROPER TIME BUT FOR NOW WE'RE JUST PUSHING THE IMAGE INTO THE MESSAGES ARRAY
-
     this.setState({ gifs: {previews: [], fullsize: []} })
-    // this.setState({ value: '' })
-
-    // We're using regex to get the room name; this will pull everything after the last slash in the url; .exec returns an array, but the first item in it is what we want
-    // const roomRegEx = /([^/]+$)/
-    // const roomName = roomRegEx.exec(this.props.location.pathname)[0]
-
-    // We're also using regex to get the subdirectory, either /rooms/ or /randos/. We want to use RegEx rather than slice or something to account for differences in name length
-    // const subdirRegEx = /^(.*[\\\/])/
-    // const subdir = subdirRegEx.exec(this.props.location.pathname)[0]
-
-    // const endpoint = config.GIFCHAT_API_ENDPOINT
-    // const url = `${endpoint}${subdir}${roomName}`
-    // console.log(url)
     
     // Establish which socket to communicate with
     const socket = this.state.room
 
     // Emit a chat message to the server
-    socket.emit('chat message', msg);
-    // console.log(socket.emit('chat message', msg));
+    socket.emit('chat message', msg)
+
     this.setState({value: ''})
+
+    this.addToConversation(msg)
   
   }
+
+  addToConversation = (msg) => {
+
+    const roomRegEx = /([^/]+$)/
+    const roomName = roomRegEx.exec(this.props.location.pathname)[0]
+    const subdirRegEx = /^(.*[\\\/])/
+    const subdir = subdirRegEx.exec(this.props.location.pathname)[0].slice(1)
+    const endpoint = config.GIFCHAT_API_ENDPOINT
+    const url = `${endpoint}${subdir}${roomName}`
+
+    const message = { msg }
+
+    const options = {
+      method: 'PATCH',
+      body: JSON.stringify(message),
+      headers: {
+        'content-type': 'application/json',
+      }
+    }
+
+    return fetch(url, options)
+      .then(res => {
+        if (!res.ok) {
+            // get the error message from the response,
+            return res.json().then(error => {
+            // then throw it
+            throw error
+            })
+        }
+        return res.json()
+      })
+      .catch(error => { console.error(error) })
+
+  }
+
 
   // Query the Tenor API for GIFs related to the search term, then set those GIFs in state as GIF options
 
@@ -59,14 +156,14 @@ export default class Room extends Component {
     // Clear the previous options
     this.setState({previews: []})
 
-    const endpoint = config.TENOR_API_ENDPOINT
+    const gif_endpoint = config.TENOR_API_ENDPOINT
     const query = this.state.value
     const apiKey = config.API_KEY
     const limit = 10 // The number of gifs to fetch
 
     // Media_filter gets rid of unnecessary results in the response, ar_range controls aspect ratio (normal or wide, we're going with default)
 
-    const url = `${endpoint}search?q=${query}&key=${apiKey}&limit=${limit}&media_filter=minimal`
+    const url = `${gif_endpoint}search?q=${query}&key=${apiKey}&limit=${limit}&media_filter=minimal`
     const options = {
       method: 'GET',
       redirect: 'follow',
@@ -104,24 +201,16 @@ export default class Room extends Component {
   
   }
 
-  // Updates state with search term as user types
+  // Updates state with search term as user types; this is causing some weird behavior with gifs restarting locally, so we'll need to check that behavior once we deploy the server
   handleChange = (e) => {
     
     this.setState({value: e.target.value});
   
   }
 
-  // When the server emits a msg to the client,
-  // update this.state.messages to include the msg
   handleMessage = (msg) => {
 
-    console.log(msg)
-
-    // const socket = this.state.room;
-
     this.setState({messages: [...this.state.messages, msg]})
-    
-    // this.setState({messages: [...this.state.messages, msg]})
 
   }
 
@@ -137,36 +226,20 @@ export default class Room extends Component {
   // When the page loads, 
   componentDidMount() {
 
-    // We're using regex to get the room name; this will pull everything after the last slash in the url; .exec returns an array, but the first item in it is what we want
-    // const roomRegEx = /([^/]+$)/
-    // const roomName = roomRegEx.exec(this.props.location.pathname)[0]
-
-    // We're also using regex to get the subdirectory, either /rooms/ or /randos/. We want to use RegEx rather than slice or something to account for differences in name length
-    // const subdirRegEx = /^(.*[\\\/])/
-    // const subdir = subdirRegEx.exec(this.props.location.pathname)[0]
-
     const api_endpoint = config.GIFCHAT_API_ENDPOINT
-    // const url = `${api_endpoint}${subdir}${roomName}`
-    // console.log(url)
-    // console.log(this)
-    
+
     // Connect to the socket and tell it which room to put the user in
     const socket = io.connect(api_endpoint);
     this.setState({ room: socket })
 
-    // console.log(socket)
-
-    // socket.on('connection', function(socket) {
-    //   // Connected, let's sign up for to receive messages for this room
-    //   // socket.emit('room', roomName);
-    //   console.log(socket.connected);
-    //   console.log(socket.connected);
-    // })
-
+    // Listen for incoming messages and handle them when they come in
     socket.on('chat message', this.handleMessage);
 
-    // When the 
-    // socket.on('chat message', this.handleMessage)
+    // If there are any messages in the conversation, retrieve them
+    this.getMessages();
+
+    // Refresh the last-connection date in the db
+    this.reportConnection();
 
   }
    
