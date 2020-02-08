@@ -61,7 +61,7 @@ export default class Room extends Component {
 
   reportConnection = () => {
 
-    // Well send this as a date, and then do Date.parse on the server side
+    // Well send this as a date, andt hen do Date.parse on the server side
     console.log(new Date())
 
     const roomRegEx = /([^/]+$)/
