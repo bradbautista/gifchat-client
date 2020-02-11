@@ -22,13 +22,15 @@ export default class Room extends Component {
 
   getMessages = () => {
 
-    // We're using regex to get the room name; this will pull everything after the last slash in the url; .exec returns an array, but the first item in it is what we want
+    // If false, we want the server to reject the request.
+    const isConnected = this.state.room.connected;
+
+    // We're using regex to get url components
     const roomRegEx = /([^/]+$)/
     const roomName = roomRegEx.exec(this.props.location.pathname)[0]
-
-    // We're using regex to get the directory, either /rooms/ or /randos/. We want to use RegEx rather than slice or something to account for differences in name length. However, we do need to slice the subdir here to get rid of an extra slash we need elsewhere.
     const subdirRegEx = /^(.*[\\\/])/
     const subdir = subdirRegEx.exec(this.props.location.pathname)[0].slice(1)
+
     const endpoint = config.GIFCHAT_API_ENDPOINT
     const url = `${endpoint}${subdir}${roomName}`
 
@@ -36,15 +38,14 @@ export default class Room extends Component {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
+        'isconnected': JSON.stringify(isConnected)
       }
     }
 
     return fetch(url, options)
       .then(messages => {
         if (!messages.ok) {
-            // get the error message from the response,
             return messages.json().then(error => {
-            // then throw it
             throw error
             })
         }
@@ -61,9 +62,6 @@ export default class Room extends Component {
 
   reportConnection = () => {
 
-    // Well send this as a date, andt hen do Date.parse on the server side
-    console.log(new Date())
-
     const roomRegEx = /([^/]+$)/
     const roomName = roomRegEx.exec(this.props.location.pathname)[0]
     const subdirRegEx = /^(.*[\\\/])/
@@ -71,7 +69,7 @@ export default class Room extends Component {
     const endpoint = config.GIFCHAT_API_ENDPOINT
     const url = `${endpoint}${subdir}${roomName}`
 
-    const currentDate = { date: new Date().toString() }
+    const currentDate = { date: Date.now() }
 
     const options = {
       method: 'PUT',
@@ -100,10 +98,8 @@ export default class Room extends Component {
 
     this.setState({ gifs: {previews: [], fullsize: []} })
     
-    // Establish which socket to communicate with
     const socket = this.state.room
 
-    // Emit a chat message to the server
     socket.emit('chat message', msg)
 
     this.setState({value: ''})
@@ -134,9 +130,7 @@ export default class Room extends Component {
     return fetch(url, options)
       .then(res => {
         if (!res.ok) {
-            // get the error message from the response,
             return res.json().then(error => {
-            // then throw it
             throw error
             })
         }
@@ -146,14 +140,12 @@ export default class Room extends Component {
 
   }
 
-
   // Query the Tenor API for GIFs related to the search term, then set those GIFs in state as GIF options
 
   getGifs = (e) => {
     
     e.preventDefault()
 
-    // Clear the previous options
     this.setState({previews: []})
 
     const gif_endpoint = config.TENOR_API_ENDPOINT
@@ -214,29 +206,23 @@ export default class Room extends Component {
 
   }
 
-  checkConnection = () => {
-
-    const socket = this.state.room;
-
-    console.log('Socket connected: ' + socket.connected)
-    console.log('Socket disconnected: ' + socket.disconnected)
-
-  }
-
-  // When the page loads, 
   componentDidMount() {
 
     const api_endpoint = config.GIFCHAT_API_ENDPOINT
 
-    // Connect to the socket and tell it which room to put the user in
+    // Connect to the socket
     const socket = io.connect(api_endpoint);
     this.setState({ room: socket })
 
     // Listen for incoming messages and handle them when they come in
     socket.on('chat message', this.handleMessage);
 
-    // If there are any messages in the conversation, retrieve them
-    this.getMessages();
+    // Wait a beat for this.state.room to have a value,
+    // then try to retrieve any messages in the room.
+    // This is necessary because we want to pass along the
+    // value of socket.connected and reject requests if the
+    // user is not connected
+    setTimeout(() => {this.getMessages()}, 500);
 
     // Refresh the last-connection date in the db
     this.reportConnection();
@@ -261,10 +247,9 @@ export default class Room extends Component {
     const gifOptions = this.state.gifs.previews.map((preview, i) => {
 
         // We don't want to send the preview to the server, we want to send the full-size gif
-
         const fullSizeGif = this.state.gifs.fullsize[i]
 
-        // Select small preview gif and arrange them in a flex container that wraps
+        // Select small preview gifs and arrange them in a flex container that wraps
         return (
             <li id={i} key={i}>
                 <img onClick={() => this.sendMessage(fullSizeGif)} className="gif-option" src={preview} alt=''/>
@@ -276,15 +261,10 @@ export default class Room extends Component {
     <div>
       <main className="room">
 
-          <ul className="messages"
-          
-          onClick = {() => {this.checkConnection()}}
-
-          >
+          <ul className="messages">
           {msgs.reverse()}
           </ul>
           
-
           <form onSubmit={this.getGifs}>
 
             <div className="room-input-flex-wrapper">

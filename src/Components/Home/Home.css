@@ -40,6 +40,10 @@ section {
   display: none;
 }
 
+.input-prompt {
+  margin-bottom: 1rem;
+}
+
 .home-input-flex-wrapper {
   display: flex;
   flex-direction: column;
@@ -50,7 +54,7 @@ section {
   padding: 2.5rem;
   font-size: 2rem;
   width: 100%;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .go-button {
@@ -96,6 +100,28 @@ footer {
   font-size: 2rem;
 }
 
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  font-size: 1.75rem;
+  width: 110px;
+  background-color: teal;
+  color: #fff;
+  text-align: left;
+  padding: 1.5rem;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
   
 /* TABLET BREAKPOINT */
 
@@ -154,6 +180,11 @@ footer {
   h2 {
       margin-top: 3rem;
       margin-bottom: 2rem;
+  }
+
+  .tooltiptext {
+    font-size: 2rem;
+    width: 400px;
   }
 
   .home-input-flex-wrapper {
