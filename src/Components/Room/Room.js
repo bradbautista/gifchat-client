@@ -25,14 +25,25 @@ export default class Room extends Component {
     // If false, we want the server to reject the request.
     const isConnected = this.state.room.connected;
 
-    // We're using regex to get url components
-    const roomRegEx = /([^/]+$)/
-    const roomName = roomRegEx.exec(this.props.location.pathname)[0]
-    const subdirRegEx = /^(.*[\\\/])/
-    const subdir = subdirRegEx.exec(this.props.location.pathname)[0].slice(1)
+    let roomName = this.props.location.pathname.split('/').pop()
+
+    // This is to prevent server crashes, as well as indicate the
+    // nature of the problem in logs. The server depends on the
+    // value of a value in the socket handshake to put the user
+    // in a room, and we need to make sure there's always a valid
+    // value there or else the server crashes and ruins everyone's fun.
+    if (roomName === undefined) {
+      roomName = 'oops-something-went-wrong-undefined'
+    } else if (roomName === null) {
+      roomName = 'oops-something-went-wrong-null'
+    } else if (!roomName) {
+      roomName = 'oops-something-went-wrong-other'
+    }
+
+    const subdir = this.props.location.pathname.split('/')[1]
 
     const endpoint = config.GIFCHAT_API_ENDPOINT
-    const url = `${endpoint}${subdir}${roomName}`
+    const url = `${endpoint}${subdir}/${roomName}`
 
     const options = {
       method: 'GET',
@@ -62,12 +73,23 @@ export default class Room extends Component {
 
   reportConnection = () => {
 
-    const roomRegEx = /([^/]+$)/
-    const roomName = roomRegEx.exec(this.props.location.pathname)[0]
-    const subdirRegEx = /^(.*[\\\/])/
-    const subdir = subdirRegEx.exec(this.props.location.pathname)[0].slice(1)
+    let roomName = this.props.location.pathname.split('/').pop()
+
+    // This is to prevent server crashes, as well as indicate the
+    // nature of the problem in logs.
+    if (roomName === undefined) {
+      roomName = 'oops-something-went-wrong-undefined'
+    } else if (roomName === null) {
+      roomName = 'oops-something-went-wrong-null'
+    } else if (!roomName) {
+      roomName = 'oops-something-went-wrong-other'
+    }
+
+    console.log(roomName)
+
+    const subdir = this.props.location.pathname.split('/')[1]
     const endpoint = config.GIFCHAT_API_ENDPOINT
-    const url = `${endpoint}${subdir}${roomName}`
+    const url = `${endpoint}${subdir}/${roomName}`
 
     const currentDate = { date: Date.now() }
 
@@ -110,12 +132,20 @@ export default class Room extends Component {
 
   addToConversation = (msg) => {
 
-    const roomRegEx = /([^/]+$)/
-    const roomName = roomRegEx.exec(this.props.location.pathname)[0]
-    const subdirRegEx = /^(.*[\\\/])/
-    const subdir = subdirRegEx.exec(this.props.location.pathname)[0].slice(1)
+    let roomName = this.props.location.pathname.split('/').pop()
+
+    if (roomName === undefined) {
+      roomName = 'oops-something-went-wrong5'
+    } else if (roomName === null) {
+      roomName = 'oops-something-went-wrong6'
+    } else if (!roomName) {
+      roomName = 'oops-something-went-wrong7'
+    }
+
+
+    const subdir = this.props.location.pathname.split('/')[1]
     const endpoint = config.GIFCHAT_API_ENDPOINT
-    const url = `${endpoint}${subdir}${roomName}`
+    const url = `${endpoint}${subdir}/${roomName}`
 
     const message = { msg }
 
@@ -225,7 +255,8 @@ export default class Room extends Component {
     setTimeout(() => {this.getMessages()}, 500);
 
     // Refresh the last-connection date in the db
-    this.reportConnection();
+    setTimeout(() => {this.reportConnection()}, 500);
+    // this.reportConnection();
 
   }
    

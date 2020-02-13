@@ -30,6 +30,8 @@ export default class Home extends Component {
       }
     }
 
+    console.log(url)
+
     return fetch(url, options)
         .then((res) => {
           return res.json();
@@ -38,7 +40,6 @@ export default class Home extends Component {
           this.setState({
             createdRoom: responseJson[0]
           })
-          navigator.clipboard.writeText(`localhost:3000/rooms/${this.state.createdRoom}`)
         })
         .catch(error => { console.error(error) })
   }
@@ -66,7 +67,7 @@ export default class Home extends Component {
         })
         .then((url) => {
           const roomName = url.split('/').pop()
-          this.props.history.push(`/randos/${roomName}`)          
+          this.openInNewTab(`/randos/${roomName}`)          
         })
         .catch(error => { console.error(error) })
 
@@ -74,6 +75,11 @@ export default class Home extends Component {
 
   // Necessitated by passing of this.props.onClick in NavButton component
   satisfyReact = () => {
+  }
+
+  openInNewTab = (url) => {
+    var win = window.open(url, '_blank');
+    win.focus();
   }
 
   handleChange = (e) => {
@@ -102,14 +108,15 @@ export default class Home extends Component {
 
                   <>
                     <span>Room created at </span>
+                      {/* <a className='room-link' target="_blank" rel="noopener noreferrer" href={`/rooms/${this.state.createdRoom}`}>{this.state.createdRoom}.</a> */}
                       <Link 
                         to={`/rooms/${this.state.createdRoom}`}
                         className='room-link'
+                        target="_blank"
+                        rel="noopener noreferrer"
                       >
-                        {this.state.createdRoom}.
-                        
+                      {this.state.createdRoom}.
                       </Link>
-                    <span> Link copied to clipboard!<span className='tooltip'>*<span className='tooltiptext'>Not supported in Firefox or Safari. :(</span></span></span>
                   </>
 
                 }
@@ -132,7 +139,7 @@ export default class Home extends Component {
                       onChange={this.handleChange} 
                       type="text" placeholder="a-big-red-dog-named-Clifford"/>
                     <button className='go-button'
-                      onClick={() => {this.props.history.push(`/rooms/${this.state.destination}`)}}
+                      onClick={() => {this.openInNewTab(`rooms/${this.state.destination}`)}}
                     >Go</button>
                   </div>
                   </>
