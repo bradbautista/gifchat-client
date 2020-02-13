@@ -42,6 +42,7 @@ form button {
     padding: 3rem;
     width: 100%;
     display: flex;
+    align-items: flex-start;
     justify-content: center; 
     margin: 0;
     border-bottom: 1px solid gainsboro;

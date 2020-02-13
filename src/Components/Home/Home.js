@@ -30,8 +30,6 @@ export default class Home extends Component {
       }
     }
 
-    console.log(url)
-
     return fetch(url, options)
         .then((res) => {
           return res.json();

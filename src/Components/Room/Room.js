@@ -85,8 +85,6 @@ export default class Room extends Component {
       roomName = 'oops-something-went-wrong-other'
     }
 
-    console.log(roomName)
-
     const subdir = this.props.location.pathname.split('/')[1]
     const endpoint = config.GIFCHAT_API_ENDPOINT
     const url = `${endpoint}${subdir}/${roomName}`
