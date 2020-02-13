@@ -105,6 +105,10 @@ form button {
     width: 11rem;
 }
 
+i {
+    font-size: 2.5rem;
+}
+
 .error {
     color: orangered;
     font-weight: 700;

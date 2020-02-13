@@ -7,7 +7,7 @@
 
 a {
   text-decoration: none;
-  cursor: default;
+  cursor: pointer;
 }
 
 html {
