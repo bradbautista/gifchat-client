@@ -15,7 +15,8 @@ export default class Room extends Component {
         previews: [],
         fullsize: [],
       },
-      room: []
+      room: [],
+      error: false,
     };
 
   }
@@ -67,7 +68,7 @@ export default class Room extends Component {
         const messageArray = messages[0].messages
         this.setState({ messages: [...messageArray]})
       })
-      .catch(error => { console.error(error) })
+      .catch(error => { this.setState({ error: true }) })
 
   }
 
@@ -291,6 +292,16 @@ export default class Room extends Component {
       <main className="room">
 
           <ul className="messages">
+            <div 
+
+              style={{ display: this.state.error ? '' : 'none'}}
+              className='error'>
+                Error: Messages could not be displayed. The room does not exist, is full, or the Internet is broken. 
+              <a  href="https://gifchat.now.sh/"  
+                  style={{ fontWeight: 700}}
+                  onClick={window.close()}
+                  > Leave this place.</a>
+            </div>
           {msgs.reverse()}
           </ul>
           
