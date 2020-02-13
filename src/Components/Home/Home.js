@@ -106,7 +106,6 @@ export default class Home extends Component {
 
                   <>
                     <span>Room created at </span>
-                      {/* <a className='room-link' target="_blank" rel="noopener noreferrer" href={`/rooms/${this.state.createdRoom}`}>{this.state.createdRoom}.</a> */}
                       <Link 
                         to={`/rooms/${this.state.createdRoom}`}
                         className='room-link'
