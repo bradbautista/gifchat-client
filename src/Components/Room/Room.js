@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import './Room.css';
 import io from 'socket.io-client';
-import config from '../../config'
+import config from '../../config';
 const uuidv4 = require('uuid/v4');
 
 export default class Room extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -13,20 +12,18 @@ export default class Room extends Component {
       messages: [],
       gifs: {
         previews: [],
-        fullsize: [],
+        fullsize: []
       },
       room: [],
-      error: false,
+      error: false
     };
-
   }
 
   getMessages = () => {
-
     // If false, we want the server to reject the request.
     const isConnected = this.state.room.connected;
 
-    let roomName = this.props.location.pathname.split('/').pop()
+    let roomName = this.props.location.pathname.split('/').pop();
 
     // This is to prevent server crashes, as well as indicate the
     // nature of the problem in logs. The server depends on the
@@ -34,214 +31,205 @@ export default class Room extends Component {
     // in a room, and we need to make sure there's always a valid
     // value there or else the server crashes and ruins everyone's fun.
     if (roomName === undefined) {
-      roomName = 'oops-something-went-wrong-undefined'
+      roomName = 'oops-something-went-wrong-undefined';
     } else if (roomName === null) {
-      roomName = 'oops-something-went-wrong-null'
+      roomName = 'oops-something-went-wrong-null';
     } else if (!roomName) {
-      roomName = 'oops-something-went-wrong-other'
+      roomName = 'oops-something-went-wrong-other';
     }
 
-    const subdir = this.props.location.pathname.split('/')[1]
+    const subdir = this.props.location.pathname.split('/')[1];
 
-    const endpoint = config.GIFCHAT_API_ENDPOINT
-    const url = `${endpoint}${subdir}/${roomName}`
+    const endpoint = config.GIFCHAT_API_ENDPOINT;
+    const url = `${endpoint}${subdir}/${roomName}`;
 
     const options = {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
-        'isconnected': JSON.stringify(isConnected)
+        isconnected: JSON.stringify(isConnected)
       }
-    }
+    };
 
     return fetch(url, options)
       .then(messages => {
         if (!messages.ok) {
-            return messages.json().then(error => {
-            throw error
-            })
+          return messages.json().then(error => {
+            throw error;
+          });
         }
-        return messages.json()
+        return messages.json();
       })
       .then(messages => {
         // Trim the chaff from the response and set them in state
-        const messageArray = messages[0].messages
-        this.setState({ messages: [...messageArray]})
+        const messageArray = messages[0].messages;
+        this.setState({ messages: [...messageArray] });
       })
-      .catch(error => { this.setState({ error: true }) })
-
-  }
+      .catch(error => {
+        this.setState({ error: true });
+      });
+  };
 
   reportConnection = () => {
-
-    let roomName = this.props.location.pathname.split('/').pop()
+    let roomName = this.props.location.pathname.split('/').pop();
 
     // This is to prevent server crashes, as well as indicate the
     // nature of the problem in logs.
     if (roomName === undefined) {
-      roomName = 'oops-something-went-wrong-undefined'
+      roomName = 'oops-something-went-wrong-undefined';
     } else if (roomName === null) {
-      roomName = 'oops-something-went-wrong-null'
+      roomName = 'oops-something-went-wrong-null';
     } else if (!roomName) {
-      roomName = 'oops-something-went-wrong-other'
+      roomName = 'oops-something-went-wrong-other';
     }
 
-    const subdir = this.props.location.pathname.split('/')[1]
-    const endpoint = config.GIFCHAT_API_ENDPOINT
-    const url = `${endpoint}${subdir}/${roomName}`
+    const subdir = this.props.location.pathname.split('/')[1];
+    const endpoint = config.GIFCHAT_API_ENDPOINT;
+    const url = `${endpoint}${subdir}/${roomName}`;
 
-    const currentDate = { date: Date.now() }
+    const currentDate = { date: Date.now() };
 
     const options = {
       method: 'PUT',
       body: JSON.stringify(currentDate),
       headers: {
-        'content-type': 'application/json',
+        'content-type': 'application/json'
       }
-    }
+    };
 
     return fetch(url, options)
       .then(res => {
         if (!res.ok) {
-            // get the error message from the response,
-            return res.json().then(error => {
+          // get the error message from the response,
+          return res.json().then(error => {
             // then throw it
-            throw error
-            })
+            throw error;
+          });
         }
-        return res.json()
+        return res.json();
       })
-      .catch(error => { console.error(error) })
+      .catch(error => {
+        console.error(error);
+      });
+  };
 
-  }
-  
-  sendMessage = (msg) => {
+  sendMessage = msg => {
+    this.setState({ gifs: { previews: [], fullsize: [] } });
 
-    this.setState({ gifs: {previews: [], fullsize: []} })
-    
-    const socket = this.state.room
+    const socket = this.state.room;
 
-    socket.emit('chat message', msg)
+    socket.emit('chat message', msg);
 
-    this.setState({value: ''})
+    this.setState({ value: '' });
 
-    this.addToConversation(msg)
-  
-  }
+    this.addToConversation(msg);
+  };
 
-  addToConversation = (msg) => {
-
-    let roomName = this.props.location.pathname.split('/').pop()
+  addToConversation = msg => {
+    let roomName = this.props.location.pathname.split('/').pop();
 
     if (roomName === undefined) {
-      roomName = 'oops-something-went-wrong5'
+      roomName = 'oops-something-went-wrong5';
     } else if (roomName === null) {
-      roomName = 'oops-something-went-wrong6'
+      roomName = 'oops-something-went-wrong6';
     } else if (!roomName) {
-      roomName = 'oops-something-went-wrong7'
+      roomName = 'oops-something-went-wrong7';
     }
 
+    const subdir = this.props.location.pathname.split('/')[1];
+    const endpoint = config.GIFCHAT_API_ENDPOINT;
+    const url = `${endpoint}${subdir}/${roomName}`;
 
-    const subdir = this.props.location.pathname.split('/')[1]
-    const endpoint = config.GIFCHAT_API_ENDPOINT
-    const url = `${endpoint}${subdir}/${roomName}`
-
-    const message = { msg }
+    const message = { msg };
 
     const options = {
       method: 'PATCH',
       body: JSON.stringify(message),
       headers: {
-        'content-type': 'application/json',
+        'content-type': 'application/json'
       }
-    }
+    };
 
     return fetch(url, options)
       .then(res => {
         if (!res.ok) {
-            return res.json().then(error => {
-            throw error
-            })
+          return res.json().then(error => {
+            throw error;
+          });
         }
-        return res.json()
+        return res.json();
       })
-      .catch(error => { console.error(error) })
-
-  }
+      .catch(error => {
+        console.error(error);
+      });
+  };
 
   // Query the Tenor API for GIFs related to the search term, then set those GIFs in state as GIF options
 
-  getGifs = (e) => {
-    
-    e.preventDefault()
+  getGifs = e => {
+    e.preventDefault();
 
-    this.setState({previews: []})
+    this.setState({ previews: [] });
 
-    const gif_endpoint = config.TENOR_API_ENDPOINT
-    const query = this.state.value
-    const apiKey = config.API_KEY
-    const limit = 10 // The number of gifs to fetch
+    const gif_endpoint = config.TENOR_API_ENDPOINT;
+    const query = this.state.value;
+    const apiKey = config.API_KEY;
+    const limit = 10; // The number of gifs to fetch
 
     // Media_filter gets rid of unnecessary results in the response, ar_range controls aspect ratio (normal or wide, we're going with default)
 
-    const url = `${gif_endpoint}search?q=${query}&key=${apiKey}&limit=${limit}&media_filter=minimal`
+    const url = `${gif_endpoint}search?q=${query}&key=${apiKey}&limit=${limit}&media_filter=minimal`;
     const options = {
       method: 'GET',
-      redirect: 'follow',
-    }
+      redirect: 'follow'
+    };
 
     return fetch(url, options)
-        .then((res) => {
-          return res.json();
-        })
-        .then((responseJson) => {
+      .then(res => {
+        return res.json();
+      })
+      .then(responseJson => {
+        // Trim the results
+        const searchResults = responseJson.results;
 
-          // Trim the results
-          const searchResults = responseJson.results
+        // Extract previews from the results
+        const gifPreviews = searchResults.map(result => {
+          return result.media[0].tinygif.url;
+        });
 
-          // Extract previews from the results
-          const gifPreviews = searchResults.map((result) => {
-            return result.media[0].tinygif.url
-          })
+        // Extract the full-size gifs from the results so we can send the full-size gif to chat
+        const fullSizeGifs = searchResults.map(result => {
+          return result.media[0].gif.url;
+        });
 
-          // Extract the full-size gifs from the results so we can send the full-size gif to chat
-          const fullSizeGifs = searchResults.map((result) => {
-            return result.media[0].gif.url
-          })
-          
-          // Set the gifs
-          this.setState({
-            gifs: {
-              previews: [...gifPreviews], 
-              fullsize: [...fullSizeGifs]
-            }
-          })
-          
-        })
-        .catch(error => { console.error(error) })
-  
-  }
+        // Set the gifs
+        this.setState({
+          gifs: {
+            previews: [...gifPreviews],
+            fullsize: [...fullSizeGifs]
+          }
+        });
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
 
   // Updates state with search term as user types; this is causing some weird behavior with gifs restarting locally, so we'll need to check that behavior once we deploy the server
-  handleChange = (e) => {
-    
-    this.setState({value: e.target.value});
-  
-  }
+  handleChange = e => {
+    this.setState({ value: e.target.value });
+  };
 
-  handleMessage = (msg) => {
-
-    this.setState({messages: [...this.state.messages, msg]})
-
-  }
+  handleMessage = msg => {
+    this.setState({ messages: [...this.state.messages, msg] });
+  };
 
   componentDidMount() {
-
-    const api_endpoint = config.GIFCHAT_API_ENDPOINT
+    const api_endpoint = config.GIFCHAT_API_ENDPOINT;
 
     // Connect to the socket
     const socket = io.connect(api_endpoint);
-    this.setState({ room: socket })
+    this.setState({ room: socket });
 
     // Listen for incoming messages and handle them when they come in
     socket.on('chat message', this.handleMessage);
@@ -251,88 +239,93 @@ export default class Room extends Component {
     // This is necessary because we want to pass along the
     // value of socket.connected and reject requests if the
     // user is not connected
-    setTimeout(() => {this.getMessages()}, 500);
+    setTimeout(() => {
+      this.getMessages();
+    }, 500);
 
     // Refresh the last-connection date in the db
-    setTimeout(() => {this.reportConnection()}, 500);
+    setTimeout(() => {
+      this.reportConnection();
+    }, 500);
     // this.reportConnection();
+  }
 
-  }
-   
-  componentDidUpdate() {
-    
-  }
-  
+  componentDidUpdate() {}
 
   render() {
-
-    const msgs = this.state.messages.map((msg) => {
-        return (
-            <li key={uuidv4()}>
-                <img alt='' src={msg}></img>
-            </li>
-        )
-    })
+    const msgs = this.state.messages.map(msg => {
+      return (
+        <li key={uuidv4()}>
+          <img alt="" src={msg}></img>
+        </li>
+      );
+    });
 
     const gifOptions = this.state.gifs.previews.map((preview, i) => {
+      // We don't want to send the preview to the server, we want to send the full-size gif
+      const fullSizeGif = this.state.gifs.fullsize[i];
 
-        // We don't want to send the preview to the server, we want to send the full-size gif
-        const fullSizeGif = this.state.gifs.fullsize[i]
+      // Select small preview gifs and arrange them in a flex container that wraps
+      return (
+        <li id={i} key={i}>
+          <img
+            onClick={() => this.sendMessage(fullSizeGif)}
+            className="gif-option"
+            src={preview}
+            alt=""
+          />
+        </li>
+      );
+    });
 
-        // Select small preview gifs and arrange them in a flex container that wraps
-        return (
-            <li id={i} key={i}>
-                <img onClick={() => this.sendMessage(fullSizeGif)} className="gif-option" src={preview} alt=''/>
-            </li>
-        )
-    })
-
-  return (
-    <div>
-      <main className="room">
-
+    return (
+      <div>
+        <main className="room">
           <ul className="messages">
-            <div 
-
-              style={{ display: this.state.error ? '' : 'none'}}
-              className='error'>
-                Error: Messages could not be displayed. The room does not exist, is full, or the Internet is broken. 
-              <a  href="https://gifchat.now.sh/"  
-                  style={{ fontWeight: 700}}
-                  > Leave this place.</a>
+            <div
+              style={{ display: this.state.error ? '' : 'none' }}
+              className="error"
+            >
+              Error: Messages could not be displayed. The room does not exist,
+              is full, or the Internet is broken.
+              <a href="https://gifchat.now.sh/" style={{ fontWeight: 700 }}>
+                {' '}
+                Leave this place.
+              </a>
             </div>
-          {msgs.reverse()}
+            {msgs.reverse()}
           </ul>
-          
-          <form onSubmit={this.getGifs}>
 
+          <form onSubmit={this.getGifs}>
             <div className="room-input-flex-wrapper">
-              <input type="text" 
-                value={this.state.value} 
-                onChange={this.handleChange} 
-                id="m" 
-                autoComplete="off" 
+              <input
+                type="text"
+                value={this.state.value}
+                onChange={this.handleChange}
+                id="m"
+                autoComplete="off"
                 placeholder="Enter search term"
               />
               <button>Search</button>
             </div>
 
-            <img alt='' className="tenor-attr" src="https://www.gstatic.com/tenor/web/attribution/PB_tenor_logo_blue_horizontal.png" />
+            <img
+              alt=""
+              className="tenor-attr"
+              src="https://www.gstatic.com/tenor/web/attribution/PB_tenor_logo_blue_horizontal.png"
+            />
 
             {/* React wants to re-render the form component every time the array (and thus height) changes, which kills our CSS transition. To get around this, we generate a dynamic height value based on the length of the array. */}
 
-            <ul className="gif-options" 
-            style={{ height: this.state.gifs.previews.length * 15 + 'rem'}}
+            <ul
+              className="gif-options"
+              style={{ height: this.state.gifs.previews.length * 15 + 'rem' }}
             >
-            {gifOptions}
+              {gifOptions}
             </ul>
-
           </form>
-      </main>
-
-    </div>
-  );
-
+        </main>
+      </div>
+    );
   }
 }
-
