@@ -299,7 +299,6 @@ export default class Room extends Component {
                 Error: Messages could not be displayed. The room does not exist, is full, or the Internet is broken. 
               <a  href="https://gifchat.now.sh/"  
                   style={{ fontWeight: 700}}
-                  onClick={window.close()}
                   > Leave this place.</a>
             </div>
           {msgs.reverse()}
