@@ -15,9 +15,10 @@ export default class Room extends Component {
         fullsize: []
       },
       room: [],
-      error: false
+      error: false,
+      next: 0
     };
-  }
+  };
 
   getMessages = () => {
     // If false, we want the server to reject the request.
@@ -121,6 +122,8 @@ export default class Room extends Component {
     socket.emit('chat message', msg);
 
     this.setState({ value: '' });
+    
+    this.setState({ next: 0 });
 
     this.addToConversation(msg);
   };
@@ -166,19 +169,25 @@ export default class Room extends Component {
 
   // Query the Tenor API for GIFs related to the search term, then set those GIFs in state as GIF options
 
+  getNewGifs = e => {
+    e.preventDefault();
+    this.setState({ next: 0 });
+    this.setState({ gifs: {previews: [], fullsize: [] }});
+    this.getGifs(e);
+  };
+
   getGifs = e => {
     e.preventDefault();
-
-    this.setState({ previews: [] });
 
     const gif_endpoint = config.TENOR_API_ENDPOINT;
     const query = this.state.value;
     const apiKey = config.API_KEY;
     const limit = 10; // The number of gifs to fetch
+    const next = this.state.next // The next page of gifs
 
     // Media_filter gets rid of unnecessary results in the response, ar_range controls aspect ratio (normal or wide, we're going with default)
 
-    const url = `${gif_endpoint}search?q=${query}&key=${apiKey}&limit=${limit}&media_filter=minimal`;
+    const url = `${gif_endpoint}search?q=${query}&key=${apiKey}&limit=${limit}&pos=${next}&media_filter=minimal`;
     const options = {
       method: 'GET',
       redirect: 'follow'
@@ -191,7 +200,7 @@ export default class Room extends Component {
       .then(responseJson => {
         // Trim the results
         const searchResults = responseJson.results;
-
+        
         // Extract previews from the results
         const gifPreviews = searchResults.map(result => {
           return result.media[0].tinygif.url;
@@ -205,14 +214,40 @@ export default class Room extends Component {
         // Set the gifs
         this.setState({
           gifs: {
-            previews: [...gifPreviews],
-            fullsize: [...fullSizeGifs]
+            previews: [...this.state.gifs.previews, ...gifPreviews],
+            fullsize: [...this.state.gifs.fullsize, ...fullSizeGifs]
           }
         });
+
+        // Set next; due to the way the Tenor API handles next,
+        // set it to 0 if the number is not divisible by 10
+        // (which indicates that we have or will very) shortly
+        // run out of gifs. This is because if you query the
+        // api with pos=55, it'll just return an empty set of
+        // results with next as zero. However, it also sometimes
+        // starts by giving you a 9 instead of a 10, in which case
+        // all the subsequent values are 29, 39, and so on.
+        ((responseJson.next % 10 != 0) && (responseJson.next.slice(-1) != '9'))
+        ? this.setState({ next: '0' })
+        : this.setState({ next: responseJson.next })
       })
       .catch(error => {
         console.error(error);
       });
+  };
+
+  // For our infinite scroller
+  getMoreGifs = () => {
+    // Send an AJAX call to the Tenor server with
+    // the additional parameter "next," which references
+    // this.state.next, starts at 9, and then when
+    // we get and process the AJAX response, either use the value of next
+    // in the response to reset this.state.next to set the
+    // value of this.state.next or just add 10 to
+    // this.state.next
+
+    // AJAX call should be the same as the AJAX call in
+    // getMessages
   };
 
   // Updates state with search term as user types; this is causing some weird behavior with gifs restarting locally, so we'll need to check that behavior once we deploy the server
@@ -247,10 +282,9 @@ export default class Room extends Component {
     setTimeout(() => {
       this.reportConnection();
     }, 500);
-    // this.reportConnection();
-  }
+  };
 
-  componentDidUpdate() {}
+  componentDidUpdate() {};
 
   render() {
     const msgs = this.state.messages.map(msg => {
@@ -296,7 +330,7 @@ export default class Room extends Component {
             {msgs.reverse()}
           </ul>
 
-          <form onSubmit={this.getGifs}>
+          <form onSubmit={this.getNewGifs}>
             <div className="room-input-flex-wrapper">
               <input
                 type="text"
@@ -316,16 +350,25 @@ export default class Room extends Component {
             />
 
             {/* React wants to re-render the form component every time the array (and thus height) changes, which kills our CSS transition. To get around this, we generate a dynamic height value based on the length of the array. */}
-
+            
             <ul
               className="gif-options"
               style={{ height: this.state.gifs.previews.length * 15 + 'rem' }}
             >
               {gifOptions}
+              <button 
+              className='get-gifs-btn' 
+              // Do not display the button if:
+              // - There are fewer than 10 results for your search, or
+              // - You've run out of additional search results
+              style={{ 
+                display: (this.state.gifs.previews.length < 10) ? 'none' : (this.state.gifs.previews.length > 10 && this.state.next === '0') ? 'none' : ''}}
+              onClick={this.getGifs}
+              >MORE GIFS!</button>
             </ul>
           </form>
         </main>
       </div>
     );
-  }
-}
+  };
+};

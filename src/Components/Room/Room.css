@@ -49,8 +49,6 @@ form button {
     margin: 0;
     border-bottom: 1px solid gainsboro;
 }
-
-
   
 /* .messages li:nth-child(odd) { 
     background: #ace; 
@@ -99,6 +97,11 @@ form button {
     width: 90%;
 }
 
+.get-gifs-btn {
+    width: 90%;
+    margin-bottom: 2rem;
+}
+
 .tenor-attr {
     margin-top: 1rem;
     height: 1.5rem;
@@ -139,10 +142,6 @@ i {
         /* left: 50%; */
         /* transform: translateX(-50%); */
         transition: all 0s ease 0s
-    }
-
-    form input {
-        /* flex-grow: 0; */
     }
 
     .room-input-flex-wrapper {
