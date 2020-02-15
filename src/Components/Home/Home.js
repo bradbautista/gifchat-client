@@ -88,7 +88,7 @@ export default class Home extends Component {
     return (
       <>
         <header>
-          <h1> GifChat </h1>
+          <h1>GifChat</h1>
         </header>
 
         <main>
@@ -183,11 +183,11 @@ export default class Home extends Component {
           {' '}
           {/* We'll also need to import FontAwesome icons or just use text links */}
           <a href="https://github.com/bradbautista/">
-            <i class="fab fa-github"></i>
+            <i className="fab fa-github"></i>
           </a>
           <a href="https://www.linkedin.com/in/bradford-bautista/">
             {' '}
-            <i class="fab fa-linkedin-in"></i>
+            <i className="fab fa-linkedin-in"></i>
           </a>
         </footer>
       </>

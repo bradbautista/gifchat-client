@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders the UI expected 1`] = `
+Array [
+  <ul
+    className="messages"
+  >
+    <div
+      className="error"
+      style={
+        Object {
+          "display": "none",
+        }
+      }
+    >
+      Error: Messages could not be displayed. The room does not exist, is full, or the Internet is broken. Try refreshing, or
+      <a
+        href="https://gifchat.now.sh/"
+        style={
+          Object {
+            "fontWeight": 700,
+          }
+        }
+      >
+         
+        leave this place.
+      </a>
+    </div>
+    https://www.someurl.com/gif.gif
+    https://www.someurl.com/gif.gif
+    https://www.someurl.com/gif.gif
+  </ul>,
+  <form
+    onSubmit={[Function]}
+  >
+    <div
+      className="room-input-flex-wrapper"
+    >
+      <input
+        autoComplete="off"
+        id="m"
+        onChange={[Function]}
+        placeholder="Enter search term"
+        type="text"
+        value="A search term"
+      />
+      <button>
+        Search
+      </button>
+    </div>
+    <img
+      alt=""
+      className="tenor-attr"
+      src="https://www.gstatic.com/tenor/web/attribution/PB_tenor_logo_blue_horizontal.png"
+    />
+    <ul
+      className="gif-options"
+      style={
+        Object {
+          "height": "45rem",
+        }
+      }
+    >
+      https://www.someurl.com/gif.gif
+      https://www.someurl.com/gif.gif
+      https://www.someurl.com/gif.gif
+      <button
+        className="get-gifs-btn"
+        onClick={[Function]}
+        style={
+          Object {
+            "display": "none",
+          }
+        }
+      >
+        MORE GIFS!
+      </button>
+    </ul>
+  </form>,
+]
+`;

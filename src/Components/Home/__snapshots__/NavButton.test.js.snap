@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders the "Get a rando" button as expected 1`] = `
+<div
+  className="card-container"
+>
+  <div
+    className="card front"
+    onClick={[Function]}
+  >
+    Get a rando
+  </div>
+  <div
+    className="card back null"
+  >
+    Searching for randos. If none are found, you will be put in a room to wait until one comes along.
+  </div>
+</div>
+`;
+
+exports[`Renders the "Get a room" button as expected 1`] = `
+<div
+  className="card-container"
+>
+  <div
+    className="card front"
+    onClick={[Function]}
+  >
+    Get a room
+  </div>
+  <div
+    className="card back null"
+  >
+    <span>
+      Room created at 
+    </span>
+    <a
+      className="room-link"
+      href="/rooms/a-big-red-dog-named-Clifford"
+      onClick={[Function]}
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      a-big-red-dog-named-Clifford
+      .
+    </a>
+  </div>
+</div>
+`;
+
+exports[`Renders the "Go to room" button as expected 1`] = `
+<div
+  className="card-container"
+>
+  <div
+    className="card front"
+    onClick={[Function]}
+  >
+    Go to room
+  </div>
+  <div
+    className="card back null"
+  >
+    <span
+      className="input-prompt"
+    >
+      Enter room name, i.e. a-big-red-dog-named-Clifford
+    </span>
+    <div
+      className="home-input-flex-wrapper"
+    >
+      <input
+        className="destination-field"
+        onChange={[Function]}
+        placeholder="a-big-red-dog-named-Clifford"
+        type="text"
+        value="a-big-red-dog-named-Clifford"
+      />
+      <button
+        className="go-button"
+        onClick={[Function]}
+      >
+        Go
+      </button>
+    </div>
+  </div>
+</div>
+`;

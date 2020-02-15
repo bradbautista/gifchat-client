@@ -227,7 +227,8 @@ export default class Room extends Component {
         // results with next as zero. However, it also sometimes
         // starts by giving you a 9 instead of a 10, in which case
         // all the subsequent values are 29, 39, and so on.
-        ((responseJson.next % 10 != 0) && (responseJson.next.slice(-1) != '9'))
+       
+        ((parseInt(responseJson.next) % 10 != 0) && (responseJson.next.slice(-1) != '9'))
         ? this.setState({ next: '0' })
         : this.setState({ next: responseJson.next })
       })
@@ -321,10 +322,10 @@ export default class Room extends Component {
               className="error"
             >
               Error: Messages could not be displayed. The room does not exist,
-              is full, or the Internet is broken.
+              is full, or the Internet is broken. Try refreshing, or
               <a href="https://gifchat.now.sh/" style={{ fontWeight: 700 }}>
                 {' '}
-                Leave this place.
+                leave this place.
               </a>
             </div>
             {msgs.reverse()}
