@@ -99,6 +99,6 @@ As I spent time considering the shape of the project, I started to really become
 
 When you tear away all of the identifying information about a user, limit their vocabulary and force them to engage with only one other person in a private space, you theoretically eliminate a lot of the vectors for toxicity that exist on social platforms. There are no lynch mobs. There are no unsolicited pictures of genitalia. There are no DMs. There is nothing letting your chat partner know whether you're a man, woman, both, neither or all of the above. There is no handle for them to track you across the Internet with. There are no strings: there's only the room, and the GIFs the Tenor API can serve up.
 
-Getting rid of identifying user information also had interesting security implicatons: Even if someone were to access a room you had been chatting in, all they would see is a string of GIFs. They could presume context, but it would be projection. It's security through absurdity.
+Getting rid of identifying user information also had interesting security implications: Even if someone were to access a room you had been chatting in, all they would see is a string of GIFs. They could presume context, but it would be projection. It's security through absurdity.
 
 Add a dash of [the Glass Bead Game](https://en.wikipedia.org/wiki/The_Glass_Bead_Game#The_game), and you've got a GifChat!
