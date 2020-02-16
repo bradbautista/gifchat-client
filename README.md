@@ -95,7 +95,7 @@ As I was running down my list of ideas to people to gauge their reactions, one c
 
 So, we're building a chat service! ...without any sort of user accounts. What does THAT look like?
 
-As I spent time considering the shape of the project and what design decisions I would have to make given all the restraints I was facing, I started to really become interested in and appreciate the type of space and the nature of the exchanges a service like this has the potential to engender. 
+As I spent time considering the shape of the project, I started to really become interested in and appreciate the type of space and the nature of the exchanges a service like this has the potential to engender. 
 
 When you tear away all of the identifying information about a user, limit their vocabulary and force them to engage with only one other person in a private space, you theoretically eliminate a lot of the vectors for toxicity that exist on social platforms. There are no lynch mobs. There are no unsolicited pictures of genitalia. There are no DMs. There is nothing letting your chat partner know whether you're a man, woman, both, neither or all of the above. There is no handle for them to track you across the Internet with. There are no strings: there's only the room, and the GIFs the Tenor API can serve up.
 
