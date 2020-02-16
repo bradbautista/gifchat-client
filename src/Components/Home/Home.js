@@ -171,9 +171,12 @@ export default class Home extends Component {
                 <strong>GIFs only.</strong>
               </li>
               <li>
-                <strong> Conversations last while they're active.</strong> Your
+                <strong>Conversations last while they're active.</strong> Your
                 room URL is your link to that conversation. If conversations go
                 inactive for seven days, they disappear and the room is closed.
+              </li>
+              <li>
+                <strong>Why?</strong> <a href="https://github.com/bradbautista/gifchat-client#readme" target="_blank" rel="noopener noreferrer">Because.</a>
               </li>
             </ul>
           </section>
