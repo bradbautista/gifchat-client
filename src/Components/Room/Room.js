@@ -16,7 +16,8 @@ export default class Room extends Component {
       },
       room: [],
       error: false,
-      next: 0
+      next: 0,
+      noresults: false
     };
   };
 
@@ -167,11 +168,12 @@ export default class Room extends Component {
       });
   };
 
-  // Query the Tenor API for GIFs related to the search term, then set those GIFs in state as GIF options
+  // Query the Tenor API for GIFs related to the search term, then set those GIFs in state as GIF options. Additionally, reset next, noresults and gif arrays.
 
   getNewGifs = e => {
     e.preventDefault();
     this.setState({ next: 0 });
+    this.setState({ noresults: false });
     this.setState({ gifs: {previews: [], fullsize: [] }});
     this.getGifs(e);
   };
@@ -200,6 +202,10 @@ export default class Room extends Component {
       .then(responseJson => {
         // Trim the results
         const searchResults = responseJson.results;
+        
+        if (searchResults.length === 0) {
+          this.setState({ noresults: true });
+        };
         
         // Extract previews from the results
         const gifPreviews = searchResults.map(result => {
@@ -237,21 +243,8 @@ export default class Room extends Component {
       });
   };
 
-  // For our infinite scroller
-  getMoreGifs = () => {
-    // Send an AJAX call to the Tenor server with
-    // the additional parameter "next," which references
-    // this.state.next, starts at 9, and then when
-    // we get and process the AJAX response, either use the value of next
-    // in the response to reset this.state.next to set the
-    // value of this.state.next or just add 10 to
-    // this.state.next
 
-    // AJAX call should be the same as the AJAX call in
-    // getMessages
-  };
-
-  // Updates state with search term as user types; this is causing some weird behavior with gifs restarting locally, so we'll need to check that behavior once we deploy the server
+  // Updates state with search term as user types
   handleChange = e => {
     this.setState({ value: e.target.value });
   };
@@ -351,7 +344,12 @@ export default class Room extends Component {
             />
 
             {/* React wants to re-render the form component every time the array (and thus height) changes, which kills our CSS transition. To get around this, we generate a dynamic height value based on the length of the array. */}
-            
+            <div
+              style={{ display: this.state.noresults ? '' : 'none' }}
+              className="noresults"
+            >
+              There is no GIF for that. Please try for new GIF.
+            </div>
             <ul
               className="gif-options"
               style={{ height: this.state.gifs.previews.length * 15 + 'rem' }}

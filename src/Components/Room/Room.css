@@ -122,6 +122,11 @@ i {
     padding-right: 2rem;
 }
 
+.noresults {
+    font-size: 2.3rem;
+    padding-top: 2rem;
+}
+
 /* TABLET BREAKPOINT */
   
 @media screen and (min-width: 720px) {
