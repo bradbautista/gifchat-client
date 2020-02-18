@@ -8,11 +8,28 @@
   background-color: var(--primary);
 }
 
+.App {
+  max-height: 100%;
+  /* height: 100vh; */
+  /* overflow: hidden; */
+  padding: 0;
+  margin: 0;
+}
+
+#root {
+  max-height: 100%;
+  /* height: 100vh; */
+  /* overflow: hidden; */
+  padding: 0;
+  margin: 0;
+}
+
 * {
   box-sizing: border-box;
   list-style-type: none;
   font-family: monospace;
   font-weight: 100;
+  /* border: 1px solid red; */
 }
 
 a {
@@ -24,10 +41,14 @@ html {
   height: 100%;
   width: 100%;
   font-size: 62.5%;
+  
 }
 
 body {
   background: url(../../noise2.png);
   background-clip: content-box;
-  overflow: hidden;
+  max-height: 100%;
+  /* height: 100vh; */
+  padding: 0;
+  margin: 0;
 }

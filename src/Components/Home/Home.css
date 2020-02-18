@@ -3,22 +3,25 @@
    
 header {
   background-color: var(--primary);
-  margin: 0;
+  margin-left: -2rem;
   display: flex;
   justify-content: center;
-  /* border-bottom: 3.2px dotted var(--secondary); */
   padding-top: 1rem;
   background: url(../../noise2.png);
   background-repeat: repeat;
 }
 
 h1 {
-  font-size: 6.5rem;
+  padding-top: 2rem;
+  font-size: 7rem;
+  /* I don't like this, but this font has a lot of extra space around it */
+  line-height: 6rem;
   font-weight: 900;
   margin: 0;
   color: var(--secondary);
   text-shadow: 1.5px 1.5px 0 var(--primary), 3.5px 3.5px 0 var(--tertiary);
-  letter-spacing: -3px;
+  letter-spacing: -10px;
+  font-family: "Bungee hairline";
 }
 
 main {
@@ -27,6 +30,7 @@ main {
   background: url(../../noise2.png);
   background-repeat: repeat;
   margin-top: -2%;
+  min-height: 100vh;
 }
 
 section {
@@ -36,9 +40,9 @@ section {
 }
 
 .room-link {
-  font-size: 2.5rem;
+  font-size: 3.5rem;
   font-weight: 900;
-  line-height: 2.2rem;
+  line-height: 2.8rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
@@ -107,7 +111,7 @@ li {
   margin-bottom: 1.5rem;
   padding: 0;
   /* padding-left: 0.5rem; */
-  font-size: 2rem;
+  font-size: 1.75rem;
 }
 
 footer {
@@ -115,7 +119,12 @@ footer {
   display: flex;
   justify-content: space-evenly;
   padding: 1rem;
-  font-size: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 1.75rem;
+}
+
+.fa-linkedin-in, .fa-github {
+  font-size: 3.2rem;  
 }
 
 footer a {
@@ -136,6 +145,10 @@ footer a:visited {
 
   h1 {
     text-shadow: 3px 3px 0 var(--primary), 8px 8px 0 var(--tertiary);
+    letter-spacing: -40px;
+    line-height: 15rem;
+    margin-top: 3rem;
+    font-size: 25rem;
   }
   
   body {
@@ -193,9 +206,10 @@ footer a:visited {
 
   header {
       justify-content: flex-start;
-      padding-left: 8rem;
+      padding-left: 4rem;
       padding-bottom: 2rem;
       padding-top: 2rem;
+      margin-left: 0rem;
   }
 
   section {
@@ -212,19 +226,15 @@ footer a:visited {
   }
 
   h1 {
-    font-size: 12rem;
-    font-weight: 900;    
+    font-size: 21rem;
+    font-weight: 900;
+    padding-left: 0;    
   }
 
   h2 {
       margin-top: 3rem;
       margin-bottom: 2rem;
       line-height: 4rem;
-  }
-
-  .tooltiptext {
-    font-size: 2rem;
-    width: 400px;
   }
 
   .home-input-flex-wrapper {

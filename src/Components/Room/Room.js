@@ -315,7 +315,6 @@ export default class Room extends Component {
     });
 
     return (
-      <li>
         <main className="room">
           <ul className="messages">
             <li
@@ -387,7 +386,6 @@ export default class Room extends Component {
             </ul>
           </form>
         </main>
-      </li>
     );
   };
 };
