@@ -13,7 +13,7 @@ header {
 
 h1 {
   padding-top: 2rem;
-  font-size: 7rem;
+  font-size: 7.5rem;
   /* I don't like this, but this font has a lot of extra space around it */
   line-height: 6rem;
   font-weight: 900;
@@ -42,7 +42,7 @@ section {
 .room-link {
   font-size: 3.5rem;
   font-weight: 900;
-  line-height: 2.8rem;
+  line-height: 3rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
@@ -149,10 +149,10 @@ footer a:visited {
 
   h1 {
     text-shadow: 3px 3px 0 var(--primary), 8px 8px 0 var(--tertiary);
-    letter-spacing: -40px;
+    letter-spacing: -25px;
     line-height: 15rem;
     margin-top: 3rem;
-    font-size: 20rem;
+    font-size: 18rem;
   }
   
   body {
@@ -250,7 +250,7 @@ footer a:visited {
   }
 
   h1 {
-    font-size: 21rem;
+    font-size: 16rem;
     font-weight: 900;
     padding-left: 0; 
     line-height: 13.5rem;   
@@ -261,6 +261,7 @@ footer a:visited {
       margin-bottom: 2rem;
       line-height: 6.2rem;
       letter-spacing: -2px;
+      font-size: 6rem;
   }
 
   .home-input-flex-wrapper {
