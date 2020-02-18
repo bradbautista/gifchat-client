@@ -1,9 +1,23 @@
+/* VARIABLES DEFINED IN APP.CSS */
+
+body {
+    height: 100%;
+}
+
+main {
+    /* background-color: var(--primary);
+    opacity: 0.99; */
+    background-repeat: repeat;
+    margin-top: 0;
+  }
+
 form {
+    max-height: 80%;
+    background: url(../../noise2.png);
     /* max-height: 100rem;
     min-height: 0rem; */
-    background-color: snow;
-    box-shadow: 0px 0px 40px 0px inset rgba(0, 0, 0, 0.1);
-    padding: 4rem;
+    background-color: rgba(255, 250, 205, 0.75);
+    padding: 2rem;
     padding-bottom: 0rem;
     position: fixed; 
     bottom: 0; 
@@ -11,21 +25,47 @@ form {
     flex-direction: column;
     justify-content: flex-start;
     width: 100%;
-    border-top: 1px solid darkturquoise;
+    border-top: 2px solid var(--secondary);
     /* transition: all 4s ease; */
 }
   
 form input { 
-    border: 1px solid darkturquoise;
+    border: 1px solid var(--tertiary);
     padding: 10px;
     flex-grow: 1;
     margin-right: 2rem;
+    box-shadow: 5px 5px var(--quaternary);
 }
   
 form button { 
-    background: rgb(130, 224, 255); 
-    border: none; 
+    background: var(--secondary); 
+    border: 1px solid var(--senary);
     padding: 10px;
+    color: white;
+    box-shadow: 5px 5px var(--quaternary);
+    
+}
+
+.fa-times {
+    color: white;
+    padding-left: 0.35rem;
+    padding-right: 0.35rem;
+    
+}
+
+.messages-prompt {
+    font-size: 2rem;
+    font-weight: 900;
+    border: 2px solid var(--secondary);
+    padding: 0;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: rgba(255, 250, 205, 0.75);;
+    margin: 3rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    text-align: center;
 }
   
 .messages { 
@@ -39,7 +79,7 @@ form button {
     /* background-color: silver; */
 }
   
-.messages li { 
+.message { 
     padding: 3rem;
     width: 100%;
     display: flex;
@@ -47,7 +87,13 @@ form button {
     flex-shrink: 0;
     justify-content: center; 
     margin: 0;
-    border-bottom: 1px solid gainsboro;
+    border-bottom: 1px solid var(--secondary);
+}
+
+.messages img { 
+    border: 1px solid var(--tertiary);
+    box-shadow: 
+        5px 5px var(--secondary)
 }
   
 /* .messages li:nth-child(odd) { 
@@ -84,26 +130,37 @@ form button {
     align-content: flex-start;
     padding: 0;
     margin: 0;
-    margin-top: 3rem;
+    /* margin-top: 2rem; */
     transition: all 1s ease;
     flex-grow: 1;
+    width: 100%;
+    /* border: 1px solid var(--tertiary); */
+    padding-left: 2rem;
+    padding-top: 2rem;
+}
+
+.gif-options li {
+    width: 95%;
 }
 
 .gif-options img {
-    margin-right: 2.5rem;
-    border-radius: 1.5rem;
+    margin-right: 0;
+    border: 1px solid var(--secondary);
+    box-shadow: -5px -5px var(--tertiary);
     padding: 0;
     margin-left: 0;
-    width: 90%;
+    width: 100%;
 }
 
 .get-gifs-btn {
-    width: 90%;
+    width: 95%;
     margin-bottom: 2rem;
+    box-shadow: -5px -5px var(--tertiary);
+    border: 1px solid var(--senary);
 }
 
 .tenor-attr {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     height: 1.5rem;
     width: 11rem;
 }
@@ -115,11 +172,18 @@ i {
 .error {
     color: orangered;
     font-weight: 700;
-    font-size: 3rem;
-    padding-left: 4rem;
+    font-size: 2.5rem;
+    padding-left: 3rem;
     padding-top: 2rem;
     padding-bottom: 2rem;
     padding-right: 2rem;
+    border: 2px solid var(--secondary);
+    background-color: rgba(255, 250, 205, 0.75);
+    margin: 3rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    letter-spacing: -0.5px;
 }
 
 .noresults {
@@ -131,6 +195,9 @@ i {
   
 @media screen and (min-width: 720px) {
 
+    h1 {
+        font-size: 20rem;
+    }
     
 }
 
@@ -144,10 +211,17 @@ i {
         width: 50rem;
         bottom: auto;
         height: 100%;
-        /* left: 50%; */
-        /* transform: translateX(-50%); */
-        transition: all 0s ease 0s
+        max-height: 100%;
+        padding: 4rem;
+        border-top: 0;
+        border-right: 0.75rem solid var(--secondary);
+        transition: all 0s ease 0s;
+
     }
+    
+    /* .dismiss-gifs {
+        display: none;
+    } */
 
     .room-input-flex-wrapper {
         flex-grow: 0;
@@ -170,10 +244,15 @@ i {
         max-height: 100%;
         overflow: auto;
         flex-grow: 0;
+        margin-top: 3rem;
     }
 
     .gif-options li {
         width: 100%;
+    }
+
+    .gif-options img {
+        width: 90%;
     }
 
     .messages {
@@ -181,7 +260,7 @@ i {
         overflow: auto;
         flex-direction: column;
         /* margin-right: auto; */
-        border-right: 1px solid rebeccapurple;
+        border-right: 0.75rem solid var(--secondary);
     }
 
     .messages li {
@@ -190,6 +269,10 @@ i {
     }
 
     .messages img { 
+        width: 90%;
+    }
+
+    .get-gifs-btn {
         width: 90%;
     }
     

@@ -155,40 +155,43 @@ export default class Home extends Component {
             />
 
             {/* HOW TO */}
-            <h2>Here's how this works</h2>
-            <ul>
-              <li>
-                <strong>No logins.</strong> GifChat does not want your email
-                address.
-              </li>
-              <li>
-                <strong>No names.</strong> GifChat does not care who you are.
-              </li>
-              <li>
-                <strong>Two to a room.</strong>
-              </li>
-              <li>
-                <strong>GIFs only.</strong>
-              </li>
-              <li>
-                <strong>Conversations last while they're active.</strong> Your
-                room URL is your link to that conversation. If conversations go
-                inactive for seven days, they disappear and the room is closed.
-              </li>
-              <li>
-                <strong>Why?</strong> <a href="https://github.com/bradbautista/gifchat-client#readme" target="_blank" rel="noopener noreferrer">Because.</a>
-              </li>
-            </ul>
+            <section className="explainer">
+              <h2>Here's how this works</h2>
+              <ul>
+                <li>
+                  <strong>No logins.</strong> GifChat does not want your email
+                  address.
+                </li>
+                <li>
+                  <strong>No names.</strong> GifChat does not care who you are.
+                </li>
+                <li>
+                  <strong>Two to a room.</strong>
+                </li>
+                <li>
+                  <strong>GIFs only.</strong>
+                </li>
+                <li>
+                  <strong>Conversations last while they're active.</strong> Your
+                  room URL is your link to that conversation. If conversations go
+                  inactive for seven days, they disappear and the room is closed.
+                </li>
+                <li>
+                  <strong>Why?</strong> <a href="https://github.com/bradbautista/gifchat-client#readme" target="_blank" rel="noopener noreferrer"><strong>Because.</strong></a>
+                </li>
+              </ul>
+            </section>
+
           </section>
         </main>
 
         <footer>
           {' '}
           {/* We'll also need to import FontAwesome icons or just use text links */}
-          <a href="https://github.com/bradbautista/">
+          <a href="https://github.com/bradbautista/" target="_blank" rel="noopener noreferrer">
             <i className="fab fa-github"></i>
           </a>
-          <a href="https://www.linkedin.com/in/bradford-bautista/">
+          <a href="https://www.linkedin.com/in/bradford-bautista/" target="_blank" rel="noopener noreferrer">
             {' '}
             <i className="fab fa-linkedin-in"></i>
           </a>

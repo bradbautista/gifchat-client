@@ -1,6 +1,5 @@
 .card-container {
     height: 26rem;
-    background-color: pink;
     margin-bottom: 5rem;
     position: relative;
 }
@@ -12,22 +11,23 @@
     position: absolute;
     padding: 3rem;
     width: 100%;
-    outline: 1px solid black;
+    outline: 2px solid var(--secondary);
     z-index: 5;
 }
   
 .front {
-    background-color: lightblue;
+    background-color: var(--quaternary);
     z-index: 0;
     bottom: 0px;
     top: 0px;
     left: 0px;
     right: 0px;
     font-size: 3rem;
+    font-weight: 400;
 }
   
 .back {
-    background-color: lavender;
+    background-color: var(--quinary);
     z-index: -6;
     top: -10px;
     left: -10px;
@@ -35,6 +35,7 @@
     right: 10px;
     font-size: 2rem;
     transition: 0.5s;
+    letter-spacing: -0.2px;
 }
   
 .swap {
@@ -50,6 +51,14 @@
   
 @media screen and (min-width: 720px) {
 
+    .front {
+        font-size: 4.5rem;
+        padding-left: 7rem;
+    }
+
+    .back {
+        font-size: 2.5rem;
+    }
     
 }
 
@@ -60,6 +69,14 @@
     .card-container {
         height: 17rem;
         margin-bottom: 5rem;
+    }
+
+    .front {
+        font-size: 3rem;
+    }
+
+    .back {
+        font-size: 2rem;
     }
     
 }

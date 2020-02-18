@@ -9,6 +9,7 @@ export default class Room extends Component {
     super(props);
     this.state = {
       value: '',
+      query: '',
       messages: [],
       gifs: {
         previews: [],
@@ -168,11 +169,12 @@ export default class Room extends Component {
       });
   };
 
-  // Query the Tenor API for GIFs related to the search term, then set those GIFs in state as GIF options. Additionally, reset next, noresults and gif arrays.
+  // Query the Tenor API for GIFs related to the search term, then set those GIFs in state as GIF options. Additionally, reset next, value, noresults and gif arrays.
 
   getNewGifs = e => {
     e.preventDefault();
     this.setState({ next: 0 });
+    this.setState({ value: '' });
     this.setState({ noresults: false });
     this.setState({ gifs: {previews: [], fullsize: [] }});
     this.getGifs(e);
@@ -182,7 +184,7 @@ export default class Room extends Component {
     e.preventDefault();
 
     const gif_endpoint = config.TENOR_API_ENDPOINT;
-    const query = this.state.value;
+    const query = this.state.query;
     const apiKey = config.API_KEY;
     const limit = 10; // The number of gifs to fetch
     const next = this.state.next // The next page of gifs
@@ -247,11 +249,17 @@ export default class Room extends Component {
   // Updates state with search term as user types
   handleChange = e => {
     this.setState({ value: e.target.value });
+    this.setState({ query: e.target.value });
   };
 
   handleMessage = msg => {
     this.setState({ messages: [...this.state.messages, msg] });
   };
+
+  dismissGifs = e => {
+    e.preventDefault();
+    this.setState({ gifs: { previews: [], fullsize: [] } });
+  }
 
   componentDidMount() {
     const api_endpoint = config.GIFCHAT_API_ENDPOINT;
@@ -283,13 +291,13 @@ export default class Room extends Component {
   render() {
     const msgs = this.state.messages.map(msg => {
       return (
-        <li key={uuidv4()}>
+        <li className="message" key={uuidv4()}>
           <img alt="" src={msg}></img>
         </li>
       );
     });
 
-    const gifOptions = this.state.gifs.previews.map((preview, i) => {
+    let gifOptions = this.state.gifs.previews.map((preview, i) => {
       // We don't want to send the preview to the server, we want to send the full-size gif
       const fullSizeGif = this.state.gifs.fullsize[i];
 
@@ -307,10 +315,10 @@ export default class Room extends Component {
     });
 
     return (
-      <div>
+      <li>
         <main className="room">
           <ul className="messages">
-            <div
+            <li
               style={{ display: this.state.error ? '' : 'none' }}
               className="error"
             >
@@ -320,7 +328,13 @@ export default class Room extends Component {
                 {' '}
                 leave this place.
               </a>
-            </div>
+            </li>
+            <li
+              style={{ display: (msgs.length === 0 && this.state.error === false) ? '' : 'none' }}
+              className="messages-prompt"
+            >
+              Messages will appear here! Search below to start your conversation!
+            </li>
             {msgs.reverse()}
           </ul>
 
@@ -333,8 +347,14 @@ export default class Room extends Component {
                 id="m"
                 autoComplete="off"
                 placeholder="Enter search term"
+                // onFocus={this.preventScroll}
               />
-              <button>Search</button>
+              {/* This gives mobile users the option to dismiss their GIF search and minimize gifOptions if they decide they don't want to send a GIF. Three is an arbitrary number; it just needs to represent enough GIFs to create a scrolling container */}
+              {(gifOptions.length > 3 && this.state.value.length === 0)
+                ? <button onClick={this.dismissGifs}><i class="fas fa-times"></i></button> 
+                : <button>Search</button> 
+              }
+              
             </div>
 
             <img
@@ -367,7 +387,7 @@ export default class Room extends Component {
             </ul>
           </form>
         </main>
-      </div>
+      </li>
     );
   };
 };
