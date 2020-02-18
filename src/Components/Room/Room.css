@@ -219,7 +219,7 @@ i {
 
 /* DESKTOP BREAKPOINT */
   
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1441px) {
 
     form {
         position: sticky;
@@ -378,6 +378,7 @@ i {
         text-shadow: 1.5px 1.5px 0 var(--primary), 3.5px 3.5px 0 var(--tertiary);
         margin-bottom: 3rem;
         padding-right: 5rem;
+        line-height: 3.5rem;
     }
 
     hr {
