@@ -62,9 +62,29 @@
     
 }
 
+/* iPad pro BREAKPOINT */
+
+@media screen and (min-width: 1024px) {
+
+    .card-container {
+        height: 30rem;
+    }
+
+    .front {
+        font-size: 6rem;
+        padding-left: 7rem;
+    }
+
+    .back {
+        font-size: 3.5rem;
+    }
+
+}
+
+
 /* DESKTOP BREAKPOINT */
   
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1200px) {
 
     .card-container {
         height: 17rem;

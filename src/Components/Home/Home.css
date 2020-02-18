@@ -143,12 +143,16 @@ footer a:visited {
     margin-top: -5%;
   }
 
+  header {
+    margin-left: -3rem;
+  }
+
   h1 {
     text-shadow: 3px 3px 0 var(--primary), 8px 8px 0 var(--tertiary);
     letter-spacing: -40px;
     line-height: 15rem;
     margin-top: 3rem;
-    font-size: 25rem;
+    font-size: 20rem;
   }
   
   body {
@@ -178,6 +182,7 @@ footer a:visited {
     padding-bottom: 2rem;
     background-color: rgba(255, 250, 205, 0.75);
     margin: 0;
+    margin-bottom: 0;
     border: 2px solid var(--secondary)
   }
 
@@ -192,9 +197,28 @@ footer a:visited {
 
 }
 
-/* DESKTOP BREAKPOINT */
+/* iPad pro BREAKPOINT */
 
 @media screen and (min-width: 1024px) {
+
+  h1 {
+    line-height: 20rem;
+  }
+
+  h2 {
+    font-size: 8rem;
+    line-height: 8rem;
+  }
+
+  .explainer li {
+    font-size: 4rem;
+  }
+
+}
+
+/* DESKTOP BREAKPOINT */
+
+@media screen and (min-width: 1200px) {
 
   main {
     margin-top: -3%;
@@ -228,13 +252,15 @@ footer a:visited {
   h1 {
     font-size: 21rem;
     font-weight: 900;
-    padding-left: 0;    
+    padding-left: 0; 
+    line-height: 13.5rem;   
   }
 
   h2 {
-      margin-top: 3rem;
+      margin-top: 1rem;
       margin-bottom: 2rem;
-      line-height: 4rem;
+      line-height: 6.2rem;
+      letter-spacing: -2px;
   }
 
   .home-input-flex-wrapper {
