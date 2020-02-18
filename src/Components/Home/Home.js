@@ -156,7 +156,7 @@ export default class Home extends Component {
 
             {/* HOW TO */}
             <section className="explainer">
-              <h2>Here's how this works</h2>
+              <h2>Rules of GifChat</h2>
               <ul>
                 <li>
                   <strong>No logins.</strong> GifChat does not want your email

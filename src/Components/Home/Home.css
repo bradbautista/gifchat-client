@@ -75,6 +75,9 @@ section {
   height: 7.7rem;
   padding: 0;
   margin: 0;
+  font-weight: 900;
+  font-size: 3rem;
+  color: black;
 }
 
 .explainer {
@@ -189,6 +192,7 @@ footer a:visited {
   h2 {
     font-size: 5.5rem;
     margin-bottom: 2rem;
+    line-height: 4.5rem;
   }
 
   .explainer li {
@@ -250,7 +254,7 @@ footer a:visited {
   }
 
   h1 {
-    font-size: 16rem;
+    font-size: 18rem;
     font-weight: 900;
     padding-left: 0; 
     line-height: 13.5rem;   
@@ -286,6 +290,10 @@ footer a:visited {
 
   .explainer {
     width: 65rem;
+  }
+
+  .explainer li {
+    font-size: 2.6rem;
   }
 
   footer {
