@@ -18,7 +18,8 @@ export default class Room extends Component {
       room: [],
       error: false,
       next: 0,
-      noresults: false
+      noresults: false,
+      lastsearch: ''
     };
   };
 
@@ -173,6 +174,7 @@ export default class Room extends Component {
 
   getNewGifs = e => {
     e.preventDefault();
+    this.setState({ lastsearch: this.state.query })
     this.setState({ next: 0 });
     this.setState({ value: '' });
     this.setState({ noresults: false });
@@ -332,7 +334,7 @@ export default class Room extends Component {
               style={{ display: (msgs.length === 0 && this.state.error === false) ? '' : 'none' }}
               className="messages-prompt"
             >
-              Messages will appear here! Search below to start your conversation!
+              Messages will appear here! Search and click on a GIF to start your conversation!
             </li>
             {msgs.reverse()}
           </ul>
@@ -385,6 +387,26 @@ export default class Room extends Component {
               >MORE GIFS!</button>
             </ul>
           </form>
+          <section className="desktop-extras">
+            <h3 className="conversation-length__header">Messages<br/>in this conversation</h3>
+            <span className="messages-length">{msgs.length}</span>
+            <hr align="left"/>
+            <h3 className="status__header">Connection<br/>status</h3>
+            <span className="online-status">
+              {(this.state.room.connected)
+                ? 'Very online'
+                : 'Very offline'
+              }
+            </span>
+            <hr align="left"/>
+            <h3 className="last-search__header">You last<br/>searched for:</h3>
+            <span className="last-search">
+              {(this.state.lastsearch === '')
+                ? `GifChat can't remember what you last searched for :(`
+                : this.state.lastsearch
+              }
+            </span>
+          </section>
         </main>
     );
   };

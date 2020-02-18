@@ -111,7 +111,7 @@ form button {
     display: flex;
     flex-direction: row;
     flex-grow: 1;
-    min-height: 4.5rem;
+    min-height: 4.9rem;
 }
 
 .gif-options {
@@ -193,6 +193,10 @@ i {
     background-color: rgba(255, 250, 205, 0.75);
 }
 
+.desktop-extras {
+    display: none;
+}
+
 /* TABLET BREAKPOINT */
   
 @media screen and (min-width: 720px) {
@@ -228,7 +232,6 @@ i {
         border-top: 0;
         border-right: 0.75rem solid var(--secondary);
         transition: all 0s ease 0s;
-
     }
 
     .room-input-flex-wrapper {
@@ -247,7 +250,6 @@ i {
         width: 100%;
     }
     
-
     .gif-options {
         max-height: 100%;
         overflow: auto;
@@ -278,14 +280,125 @@ i {
         width: 90%;
     }
 
-    /* .messages img { 
-        width: 90%;
-    } */
-
     .get-gifs-btn {
         width: 90%;
     }
     
+}
+
+@media screen and (min-width: 1700px) {
+
+    .desktop-extras {
+        display: initial;
+        position: absolute;
+        right: 0;
+        width: 35rem;
+        height: 100%;
+        padding-left: 3rem;
+        padding-top: 3rem;
+        padding-right: 0;
+    }
+
+    .conversation-length__header {
+        font-size: 3rem;
+        padding: 0;
+        margin: 0;
+        font-family: "Courier";
+        font-weight: 100;
+        color: var(--secondary);
+        font-size: 4.5rem;
+        letter-spacing: -3px;
+        line-height: 3.6rem;
+        text-shadow: 1.5px 1.5px 0 var(--primary), 3.5px 3.5px 0 var(--tertiary);
+    }
+
+    .messages-length {
+        font-size: 15rem;
+        text-align: left;
+        margin-top: -0.5rem;
+        width: 100%;
+        font-weight: 900;
+        display: block;
+        color: var(--secondary);
+        text-shadow: 1.5px 1.5px 0 var(--primary), 3.5px 3.5px 0 var(--tertiary);
+    }
+
+    .status__header {
+        font-size: 3rem;
+        padding: 0;
+        margin: 0;
+        margin-top: 3rem;
+        font-family: "Courier";
+        font-weight: 100;
+        color: var(--secondary);
+        font-size: 4.5rem;
+        letter-spacing: -3px;
+        line-height: 3.6rem;
+        text-shadow: 1.5px 1.5px 0 var(--primary), 3.5px 3.5px 0 var(--tertiary);
+    }
+
+    .online-status {
+        font-size: 5rem;
+        letter-spacing: -1px;
+        text-align: left;
+        margin-top: 0.5rem;
+        /* border: 1px solid red; */
+        width: 100%;
+        font-weight: 900;
+        display: block;
+        color: var(--secondary);
+        text-shadow: 1.5px 1.5px 0 var(--primary), 3.5px 3.5px 0 var(--tertiary);
+        margin-bottom: 3rem;
+    }
+
+    .last-search__header {
+        font-size: 3rem;
+        padding: 0;
+        margin: 0;
+        margin-top: 3rem;
+        font-family: "Courier";
+        font-weight: 100;
+        color: var(--secondary);
+        font-size: 4.5rem;
+        letter-spacing: -3px;
+        line-height: 3.6rem;
+        text-shadow: 1.5px 1.5px 0 var(--primary), 3.5px 3.5px 0 var(--tertiary);
+    }
+
+    .last-search {
+        font-size: 4rem;
+        letter-spacing: -1px;
+        text-align: left;
+        margin-top: 1.5rem;
+        /* border: 1px solid red; */
+        width: 100%;
+        font-weight: 900;
+        display: block;
+        color: var(--secondary);
+        text-shadow: 1.5px 1.5px 0 var(--primary), 3.5px 3.5px 0 var(--tertiary);
+        margin-bottom: 3rem;
+        padding-right: 5rem;
+    }
+
+    hr {
+        width: 30rem;
+        height: 7px;
+        background-color: var(--secondary);
+        margin: 0;
+        box-shadow: 3px 3px 0px 0px var(--tertiary);
+    }
+
+
+}
+
+@media screen and (min-width: 1800px) {
+
+    .desktop-extras {
+        padding-left: 0rem;
+        width: 37rem;
+    }
+
+
 }
 
 /*** Styles added to fix the issue with zoom in on iphone ***/
