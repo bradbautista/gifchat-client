@@ -1,6 +1,6 @@
-# GifChat
+# [GifChat](https://gifchat.now.sh/)
 
-![GifChat home](https://github.com/bradbautista/gifchat-client/blob/master/images/gchome.png)
+[![GifChat home](https://github.com/bradbautista/gifchat-client/blob/master/images/gchome.png)](https://gifchat.now.sh/)
 
 **Has postmodernity rendered you speechless? Does your soul yearn to express itself in a way words cannot? Do you like chatting, but hate typing? Do you like GIFs?**
 
@@ -19,11 +19,11 @@
 
 ![GifChat demonstration](https://github.com/bradbautista/gifchat-client/blob/master/images/ezgif.com-crop.gif)
 
-GifChat is a pseudo-anonymous, self-cleaning chat service that only allows users to communicate via animated GIFs.
+GifChat is a pseudo-anonymous, self-cleaning chat service that forces users to communicate only using animated GIFs.
 
 ### Pseudo-anonymous?
 
-GifChat does not care who you are. There is no sign-up process, no login process: Just grab a room and start chatting with a friend or stranger.
+GifChat does not care who you are. There is no sign-up process, no login process: Just grab a room and start chatting with a friend or stranger. Be yourself, or someone else.
 
 ### If there are no accounts, how do I know who sent which message?
 
