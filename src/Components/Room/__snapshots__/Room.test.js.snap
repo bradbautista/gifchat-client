@@ -1,11 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Renders the UI expected 1`] = `
-Array [
+<main
+  className="room"
+>
   <ul
     className="messages"
   >
-    <div
+    <li
       className="error"
       style={
         Object {
@@ -25,11 +27,21 @@ Array [
          
         leave this place.
       </a>
-    </div>
+    </li>
+    <li
+      className="messages-prompt"
+      style={
+        Object {
+          "display": "none",
+        }
+      }
+    >
+      Messages will appear here! Search and click on a GIF to start your conversation!
+    </li>
     https://www.someurl.com/gif.gif
     https://www.someurl.com/gif.gif
     https://www.someurl.com/gif.gif
-  </ul>,
+  </ul>
   <form
     onSubmit={[Function]}
   >
@@ -53,6 +65,16 @@ Array [
       className="tenor-attr"
       src="https://www.gstatic.com/tenor/web/attribution/PB_tenor_logo_blue_horizontal.png"
     />
+    <div
+      className="noresults"
+      style={
+        Object {
+          "display": "none",
+        }
+      }
+    >
+      There is no GIF for that. Please try for new GIF.
+    </div>
     <ul
       className="gif-options"
       style={
@@ -76,6 +98,52 @@ Array [
         MORE GIFS!
       </button>
     </ul>
-  </form>,
-]
+  </form>
+  <section
+    className="desktop-extras"
+  >
+    <h3
+      className="conversation-length__header"
+    >
+      Messages
+      <br />
+      in this conversation
+    </h3>
+    <span
+      className="messages-length"
+    >
+      3
+    </span>
+    <hr
+      align="left"
+    />
+    <h3
+      className="status__header"
+    >
+      Connection
+      <br />
+      status
+    </h3>
+    <span
+      className="online-status"
+    >
+      Very offline
+    </span>
+    <hr
+      align="left"
+    />
+    <h3
+      className="last-search__header"
+    >
+      You last
+      <br />
+      searched for:
+    </h3>
+    <span
+      className="last-search"
+    >
+      A search term
+    </span>
+  </section>
+</main>
 `;

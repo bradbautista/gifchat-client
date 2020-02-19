@@ -10,6 +10,7 @@ export default class Room extends Component {
     this.state = {
       value: '',
       query: '',
+      lastsearch: '',
       messages: [],
       gifs: {
         previews: [],
@@ -18,8 +19,7 @@ export default class Room extends Component {
       room: [],
       error: false,
       next: 0,
-      noresults: false,
-      lastsearch: ''
+      noresults: false
     };
   };
 
@@ -30,8 +30,8 @@ export default class Room extends Component {
     let roomName = this.props.location.pathname.split('/').pop();
 
     // This is to prevent server crashes, as well as indicate the
-    // nature of the problem in logs. The server depends on the
-    // value of a value in the socket handshake to put the user
+    // nature of the problem in logs. The server depends on a
+    // value in the socket handshake headers to put the user
     // in a room, and we need to make sure there's always a valid
     // value there or else the server crashes and ruins everyone's fun.
     if (roomName === undefined) {
@@ -77,8 +77,6 @@ export default class Room extends Component {
   reportConnection = () => {
     let roomName = this.props.location.pathname.split('/').pop();
 
-    // This is to prevent server crashes, as well as indicate the
-    // nature of the problem in logs.
     if (roomName === undefined) {
       roomName = 'oops-something-went-wrong-undefined';
     } else if (roomName === null) {
@@ -135,11 +133,11 @@ export default class Room extends Component {
     let roomName = this.props.location.pathname.split('/').pop();
 
     if (roomName === undefined) {
-      roomName = 'oops-something-went-wrong5';
+      roomName = 'oops-something-went-wrong-undefined';
     } else if (roomName === null) {
-      roomName = 'oops-something-went-wrong6';
+      roomName = 'oops-something-went-wrong-null';
     } else if (!roomName) {
-      roomName = 'oops-something-went-wrong7';
+      roomName = 'oops-something-went-wrong-other';
     }
 
     const subdir = this.props.location.pathname.split('/')[1];
@@ -174,7 +172,7 @@ export default class Room extends Component {
 
   getNewGifs = e => {
     e.preventDefault();
-    this.setState({ lastsearch: this.state.query })
+    this.setState({ lastsearch: this.state.query });
     this.setState({ next: 0 });
     this.setState({ value: '' });
     this.setState({ noresults: false });
@@ -191,7 +189,7 @@ export default class Room extends Component {
     const limit = 10; // The number of gifs to fetch
     const next = this.state.next // The next page of gifs
 
-    // Media_filter gets rid of unnecessary results in the response, ar_range controls aspect ratio (normal or wide, we're going with default)
+    // Media_filter gets rid of unnecessary results in the response, ar_range controls aspect ratio (normal or wide, we're going with default, which is normal)
 
     const url = `${gif_endpoint}search?q=${query}&key=${apiKey}&limit=${limit}&pos=${next}&media_filter=minimal`;
     const options = {
@@ -231,9 +229,9 @@ export default class Room extends Component {
 
         // Set next; due to the way the Tenor API handles next,
         // set it to 0 if the number is not divisible by 10
-        // (which indicates that we have or will very) shortly
-        // run out of gifs. This is because if you query the
-        // api with pos=55, it'll just return an empty set of
+        // (which indicates that we have or will very shortly
+        // run out of gifs). This is because if you query the
+        // api with pos=55, for example, it'll just return an empty set of
         // results with next as zero. However, it also sometimes
         // starts by giving you a 9 instead of a 10, in which case
         // all the subsequent values are 29, 39, and so on.
@@ -248,7 +246,9 @@ export default class Room extends Component {
   };
 
 
-  // Updates state with search term as user types
+  // We're tracking query and value separately for feature purposes;
+  // it enables showing user last search, as well as assisting with
+  // logic around dismissGifs
   handleChange = e => {
     this.setState({ value: e.target.value });
     this.setState({ query: e.target.value });
@@ -319,6 +319,7 @@ export default class Room extends Component {
     return (
         <main className="room">
           <ul className="messages">
+            {/* Error message is deliberately vague so as not to give too much detail to potential bad actors */}
             <li
               style={{ display: this.state.error ? '' : 'none' }}
               className="error"
@@ -348,9 +349,8 @@ export default class Room extends Component {
                 id="m"
                 autoComplete="off"
                 placeholder="Enter search term"
-                // onFocus={this.preventScroll}
               />
-              {/* This gives mobile users the option to dismiss their GIF search and minimize gifOptions if they decide they don't want to send a GIF. Three is an arbitrary number; it just needs to represent enough GIFs to create a scrolling container */}
+              {/* This gives (mobile) users the option to dismiss their GIF search and minimize gifOptions if they decide they don't want to send a GIF. Three is an arbitrary number; it just needs to represent enough GIFs to create a scrolling container */}
               {(gifOptions.length > 3 && this.state.value.length === 0)
                 ? <button onClick={this.dismissGifs}><i class="fas fa-times"></i></button> 
                 : <button>Search</button> 

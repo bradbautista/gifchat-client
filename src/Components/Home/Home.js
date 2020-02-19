@@ -187,7 +187,6 @@ export default class Home extends Component {
 
         <footer>
           {' '}
-          {/* We'll also need to import FontAwesome icons or just use text links */}
           <a href="https://github.com/bradbautista/" target="_blank" rel="noopener noreferrer">
             <i className="fab fa-github"></i>
           </a>

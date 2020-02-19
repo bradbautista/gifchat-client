@@ -24,103 +24,110 @@ it('Renders the UI as expected', () => {
         .create(
             <BrowserRouter>
                 <header>
-                    <h1>GifChat</h1>
+                <h1>GifChat</h1>
                 </header>
 
                 <main>
-                    <section>
-                        {/* GET ROOM */}
+                <section>
+                    {/* GET ROOM */}
 
-                        <NavButton
-                        onClick={someFunc}
-                        frontCardContent="Get a room"
-                        backCardContent={
-                            <>
-                            <span>Room created at </span>
-                            <Link
-                                to={`/rooms/${someStr}`}
-                                className="room-link"
-                                target="_blank"
-                                rel="noopener noreferrer"
+                    <NavButton
+                    onClick={someFunc}
+                    frontCardContent="Get a room"
+                    backCardContent={
+                        <>
+                        <span>Room created at </span>
+                        <Link
+                            to={`/rooms/${someStr}`}
+                            className="room-link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {someStr}.
+                        </Link>
+                        </>
+                    }
+                    />
+
+                    {/* GO TO ROOM */}
+
+                    <NavButton
+                    // This is dumb but it works. So, NavButton is passing this.props.onClick and this.toggleSwap onClick, so React gets mad if there's not an onClick function assigned. But because of the fact that we're passing two functions and that requires a semicolon to work, JSX gets mad if we try to conditionally pass the onClick props based on this.props.frontCardContent. Thus, we pass this onClick an empty function and the program is happy.
+                    onClick={someFunc}
+                    frontCardContent="Go to room"
+                    backCardContent={
+                        <>
+                        <span className="input-prompt">
+                            Enter room name, i.e. a-big-red-dog-named-Clifford
+                        </span>
+                        <div className="home-input-flex-wrapper">
+                            <input
+                            className="destination-field"
+                            value={someStr}
+                            onChange={someFunc}
+                            type="text"
+                            placeholder="a-big-red-dog-named-Clifford"
+                            />
+                            <button
+                            className="go-button"
+                            onClick={() => {
+                                this.openInNewTab(`rooms/${someStr}`);
+                            }}
                             >
-                                {someStr}.
-                            </Link>
-                            </>
-                        }
-                        />
+                            Go
+                            </button>
+                        </div>
+                        </>
+                    }
+                    />
 
-                        {/* GO TO ROOM */}
+                    {/* GET A RANDO */}
+                    <NavButton
+                    onClick={() => {
+                        someFunc;
+                    }}
+                    frontCardContent="Get a rando"
+                    backCardContent="Searching for randos. If none are found, you will be put in a room to wait until one comes along."
+                    />
 
-                        <NavButton
-                        // This is dumb but it works. So, NavButton is passing this.props.onClick and this.toggleSwap onClick, so React gets mad if there's not an onClick function assigned. But because of the fact that we're passing two functions and that requires a semicolon to work, JSX gets mad if we try to conditionally pass the onClick props based on this.props.frontCardContent. Thus, we pass this onClick an empty function and the program is happy.
-                        onClick={someFunc}
-                        frontCardContent="Go to room"
-                        backCardContent={
-                            <>
-                            <span className="input-prompt">
-                                Enter room name, i.e. a-big-red-dog-named-Clifford
-                            </span>
-                            <div className="home-input-flex-wrapper">
-                                <input
-                                className="destination-field"
-                                value={someStr}
-                                onChange={someFunc}
-                                type="text"
-                                placeholder="a-big-red-dog-named-Clifford"
-                                />
-                                <button
-                                className="go-button"
-                                onClick={someFunc}
-                                >
-                                Go
-                                </button>
-                            </div>
-                            </>
-                        }
-                        />
-
-                        {/* GET A RANDO */}
-                        <NavButton
-                        onClick={someFunc}
-                        frontCardContent="Get a rando"
-                        backCardContent="Searching for randos. If none are found, you will be put in a room to wait until one comes along."
-                        />
-
-                        {/* HOW TO */}
-                        <h2>Here's how this works</h2>
-                            <ul>
-                                <li>
-                                    <strong>No logins.</strong> GifChat does not want your email
-                                    address.
-                                </li>
-                                <li>
-                                    <strong>No names.</strong> GifChat does not care who you are.
-                                </li>
-                                <li>
-                                    <strong>Two to a room.</strong>
-                                </li>
-                                <li>
-                                    <strong>GIFs only.</strong>
-                                </li>
-                                <li>
-                                    <strong> Conversations last while they're active.</strong> Your
-                                    room URL is your link to that conversation. If conversations go
-                                    inactive for seven days, they disappear and the room is closed.
-                                </li>
-                            </ul>
+                    {/* HOW TO */}
+                    <section className="explainer">
+                    <h2>Rules of GifChat</h2>
+                    <ul>
+                        <li>
+                        <strong>No logins.</strong> GifChat does not want your email
+                        address.
+                        </li>
+                        <li>
+                        <strong>No names.</strong> GifChat does not care who you are.
+                        </li>
+                        <li>
+                        <strong>Two to a room.</strong>
+                        </li>
+                        <li>
+                        <strong>GIFs only.</strong>
+                        </li>
+                        <li>
+                        <strong>Conversations last while they're active.</strong> Your room URL is your link to that conversation. If conversations go inactive for seven days, they disappear and the room is closed.
+                        </li>
+                        <li>
+                        <strong>Why?</strong> <a href="https://github.com/bradbautista/gifchat-client#readme" target="_blank" rel="noopener noreferrer"><strong>Because.</strong></a>
+                        </li>
+                    </ul>
                     </section>
+
+                </section>
                 </main>
 
                 <footer>
+                {' '}
+                <a href="https://github.com/bradbautista/" target="_blank" rel="noopener noreferrer">
+                    <i className="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/bradford-bautista/" target="_blank" rel="noopener noreferrer">
                     {' '}
-                    {/* We'll also need to import FontAwesome icons or just use text links */}
-                    <a href="https://github.com/bradbautista/">
-                        <i className="fab fa-github"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/in/bradford-bautista/">
-                        {' '}
-                        <i className="fab fa-linkedin-in"></i>
-                    </a>
+                    <i className="fab fa-linkedin-in"></i>
+                </a>
                 </footer>
             </BrowserRouter>
             )

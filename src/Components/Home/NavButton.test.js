@@ -40,13 +40,13 @@ it('Renders the "Get a room" button as expected', () => {
 })
 
 it('Renders the "Go to room" button as expected', () => {
-    const handleChange = () => {};
+    const someFunc = () => {};
     const someRoom = 'a-big-red-dog-named-Clifford';
     const tree = renderer
         .create(
             <BrowserRouter>
             <NavButton
-              onClick={() => this.satisfyReact()}
+              onClick={someFunc}
               frontCardContent="Go to room"
               backCardContent={
                 <>
@@ -57,7 +57,7 @@ it('Renders the "Go to room" button as expected', () => {
                     <input
                       className="destination-field"
                       value={someRoom}
-                      onChange={handleChange}
+                      onChange={someFunc}
                       type="text"
                       placeholder="a-big-red-dog-named-Clifford"
                     />
@@ -81,13 +81,13 @@ it('Renders the "Go to room" button as expected', () => {
 })
 
 it('Renders the "Get a rando" button as expected', () => {
-    const searchForRandos = () => {};
+    const someFunc = () => {};
     const tree = renderer
         .create(
             <BrowserRouter>
             <NavButton
               onClick={() => {
-                searchForRandos();
+                someFunc;
               }}
               frontCardContent="Get a rando"
               backCardContent="Searching for randos. If none are found, you will be put in a room to wait until one comes along."
