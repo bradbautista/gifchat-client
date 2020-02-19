@@ -1,5 +1,7 @@
 # GifChat
 
+![GifChat home](https://github.com/bradbautista/gifchat-client/blob/master/images/gchome.png)
+
 **Has postmodernity rendered you speechless? Does your soul yearn to express itself in a way words cannot? Do you like chatting, but hate typing? Do you like GIFs?**
 
 *GifChat is for you!*
@@ -14,6 +16,8 @@
 
 <a name="about"></a>
 ## About
+
+![GifChat demonstration](https://github.com/bradbautista/gifchat-client/blob/master/images/ezgif.com-crop.gif)
 
 GifChat is a pseudo-anonymous, self-cleaning chat service that only allows users to communicate via animated GIFs.
 
