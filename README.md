@@ -44,7 +44,7 @@ GifChat rooms/conversations can and will die of neglect. If a room is generated 
 <a name="tech"></a>
 ## Tech
 
-GifChat is a full-stack web application. The client is hosted [Zeit](https://zeit.co/home) and the server and database are hosted on [Heroku](https://www.heroku.com). Here's the stack:
+GifChat is a full-stack web application. The client is hosted on [Zeit](https://zeit.co/home) and the server and database are hosted on [Heroku](https://www.heroku.com). Here's the stack:
 
 **Front end**
 <br>
